@@ -1,4 +1,3 @@
-export interface PageProps {
-  title: string;
-  children: React.ReactNode;
+export interface ListPageProps {
+  params: Promise<{ id: string }>;
 }

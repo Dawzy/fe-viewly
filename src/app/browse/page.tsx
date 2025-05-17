@@ -1,19 +1,13 @@
-import { Button } from "@/components/ui/button"
-import { Plus } from "lucide-react"
-import { ListPageProps } from "@/types";
 import { getMockData } from "@/utils";
 import Image from "next/image";
 import { PageHeader } from "@/components";
 
-const ListItemsPage = async ({ params }: ListPageProps) => {
-  const { id } = await params;
+const ListItemsPage = async () => {
   return (
     <div className="page-container">
       {/* Page Header */}
       <PageHeader
-        title="List Name!"
-        options={{"Rename List": false, "Delete List": true }}
-        showAddButton
+        title="Trending"
       />
 
       {/* Page Content */}
@@ -29,11 +23,6 @@ const ListItemsPage = async ({ params }: ListPageProps) => {
             height={162}
           />
         )}
-
-        {/* Add movie button */}
-        <Button className="flex justify-center items-center w-[122px] h-[162px] bg-on-surface rounded-2xl hover:bg-background">
-          <Plus className="text-primary !h-12 w-12!" />
-        </Button>
       </div>
     </div>
   )

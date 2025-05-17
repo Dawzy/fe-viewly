@@ -8,8 +8,8 @@ import Link from "next/link";
 const Links = () => {
   return (
     <>
+      <Link href="/browse">Browse</Link>
       <Link href="/">My Lists</Link>
-      <Link href="/Browse">Browse</Link>
       <Link href="/profile">Profile</Link>
       <Link href="/logout">Logout</Link>
     </>

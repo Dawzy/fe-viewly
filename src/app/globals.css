@@ -171,6 +171,18 @@
   grid-gap: 2rem;
 }
 
+.page-container {
+  @apply
+  container
+  flex 
+  flex-grow
+  flex-col
+  gap-2
+  text-secondary-text
+  mx-auto
+  rounded-2xl
+}
+
 .page {
   @apply
   container

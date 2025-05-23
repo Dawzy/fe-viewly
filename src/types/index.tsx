@@ -18,10 +18,10 @@ export interface PageHeaderProps {
   showAddButton?: boolean;
 }
 
-export interface IListsPayload {
-  page?: number;
-  perPage?: number;
-}
+// export interface IListsPayload {
+//   page?: number;
+//   perPage?: number;
+// }
 
 export interface IListsResponse {
   data: List[];
@@ -29,8 +29,8 @@ export interface IListsResponse {
 
 export interface IListPayload {
   id: List["id"];
-  page?: number;
-  perPage?: number;
+  // page?: number;
+  // perPage?: number;
 }
 
 export interface IListResponse {

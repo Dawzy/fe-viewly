@@ -4,6 +4,7 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 export const metadata: Metadata = {
   title: "Viewly",
@@ -28,6 +29,8 @@ export default function RootLayout({
           <QueryProvider>
             <Navbar />
             {children}
+
+            <ReactQueryDevtools initialIsOpen={false} />
           </QueryProvider>
         </body>
       </html>

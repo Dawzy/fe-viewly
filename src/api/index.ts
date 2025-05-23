@@ -1,33 +1,32 @@
-import baseInstance from "@/axiosInstances";
+import { axiosClientInstance } from "@/axios";
 import {
-  IListsPayload,
   IListsResponse,
   IListPayload,
   IListResponse,
 } from "@/types";
 
 // URLS
-const LISTS = "/lists";
+const LISTS_URL = "/lists";
 
-export const getLists = async (
-  payload: IListsPayload
-): Promise<IListsResponse> => {
-  const { data } = await baseInstance({
+export const getLists = async (): Promise<IListsResponse> => {
+  const { data } = await axiosClientInstance({
     method: "get",
-    url: LISTS,
-    data: payload
+    url: LISTS_URL,
   });
 
   return data;
 }
 
+// TO DO
+  // ADD PUT LIST
+  // ADD DELETE LIST W/ ID
+
 export const getList = async (
   payload: IListPayload
 ): Promise<IListResponse> => {
-  const { data } = await baseInstance({
+  const { data } = await axiosClientInstance({
     method: "get",
-    url: `${LISTS}/${payload["id"]}`,
-    data: payload
+    url: `${LISTS_URL}/${payload["id"]}`,
   });
 
   return data;

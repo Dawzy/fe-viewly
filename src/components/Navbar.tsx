@@ -4,20 +4,25 @@ import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { UserButton } from "@clerk/nextjs";
+import { usePathname } from "next/navigation";
 
 const Links = () => {
   return (
     <>
       <Link href="/browse">Browse</Link>
-      <Link href="/">My Lists</Link>
-      <Link href="/profile">Profile</Link>
-      <Link href="/logout">Logout</Link>
+      <Link href="/lists">My Lists</Link>
+      <UserButton />
     </>
   )
 }
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
+
+  // Dont show if in sign in or sign up routes
+  if (pathname.startsWith("/sign-") || pathname === "/") return;
 
   return (
     <nav className="text-primary-text text-3xl md:text-2xl">
@@ -28,7 +33,7 @@ const Navbar = () => {
 
         {/* Desktop Links */}
         <div className="hidden md:flex gap-x-12 text-secondary-text">
-            <Links />
+          <Links />
         </div>
 
         {/* Mobile Menu Button */}

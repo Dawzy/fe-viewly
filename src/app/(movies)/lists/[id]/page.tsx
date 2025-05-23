@@ -1,12 +1,22 @@
 import { Button } from "@/components/ui/button"
 import { Plus } from "lucide-react"
-import { ListPageProps } from "@/types";
 import { getMockData } from "@/utils";
 import Image from "next/image";
 import { PageHeader } from "@/components";
+import { getQueryClient } from "@/utils/get-query-client";
+import { listOptions } from "@/api/query-options";
 
-const ListItemsPage = async ({ params }: ListPageProps) => {
+const ListItemsPage = async ({
+  params
+}: {
+  params: Promise<{ id: string }>
+}) => {
   const { id } = await params;
+
+  // Prefetch on serverside
+  const queryClient = getQueryClient();
+  await queryClient.prefetchQuery( listOptions( id ) );
+
   return (
     <div className="page-container">
       {/* Page Header */}

@@ -1,6 +1,6 @@
+import { PageHeader } from "@/components";
 import { getMockData } from "@/utils";
 import Image from "next/image";
-import { PageHeader } from "@/components";
 
 const ListItemsPage = async () => {
   return (

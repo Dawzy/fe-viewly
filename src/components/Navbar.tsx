@@ -8,10 +8,25 @@ import { UserButton } from "@clerk/nextjs";
 import { usePathname } from "next/navigation";
 
 const Links = () => {
+  const pathname = usePathname();
+  const isOnBrowse = pathname.startsWith("/browse");
+  const isOnLists = pathname.startsWith("/lists");
+
   return (
     <>
-      <Link href="/browse">Browse</Link>
-      <Link href="/lists">My Lists</Link>
+      <Link
+        className={`hover:text-accent ${isOnBrowse && "text-accent"}`}
+        href="/browse" 
+      >
+        Browse
+      </Link>
+
+      <Link
+        className={`hover:text-accent ${isOnLists && "text-accent"}`}
+        href="/lists" 
+      >
+        My Lists
+      </Link>
       <UserButton />
     </>
   )

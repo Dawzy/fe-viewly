@@ -1,10 +1,7 @@
-import { Button } from "@/components/ui/button"
-import { Plus } from "lucide-react"
-import { getMockData } from "@/utils";
-import Image from "next/image";
-import { PageHeader } from "@/components";
-import { getQueryClient } from "@/utils/get-query-client";
-import { listOptions } from "@/api/query-options";
+import { getQueryClient } from "@/query-api/get-query-client";
+import { listQueryOptions } from "@/query-api/query-options";
+import { MyMovies } from "@/components";
+import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 
 const ListItemsPage = async ({
   params
@@ -13,38 +10,15 @@ const ListItemsPage = async ({
 }) => {
   const { id } = await params;
 
-  // Prefetch on serverside
+  // First render, prefetch on serverside
   const queryClient = getQueryClient();
-  await queryClient.prefetchQuery( listOptions( id ) );
+  await queryClient.prefetchQuery( listQueryOptions(id) );
 
   return (
     <div className="page-container">
-      {/* Page Header */}
-      <PageHeader
-        title="List Name!"
-        options={{"Rename List": false, "Delete List": true }}
-        showAddButton
-      />
-
-      {/* Page Content */}
-      <div className="page w-full px-4 py-4 gap-6 flex-wrap">
-        {getMockData().map( (img, index) =>
-          <Image
-            key={index}
-            src={img}
-            alt=""
-            className="rounded-2xl h-min"
-
-            width={122}
-            height={162}
-          />
-        )}
-
-        {/* Add movie button */}
-        <Button className="flex justify-center items-center w-[122px] h-[162px] bg-on-surface rounded-2xl hover:bg-background">
-          <Plus className="text-primary !h-12 w-12!" />
-        </Button>
-      </div>
+      <HydrationBoundary state={dehydrate( queryClient )}>
+        <MyMovies listId={id} />
+      </HydrationBoundary>
     </div>
   )
 }

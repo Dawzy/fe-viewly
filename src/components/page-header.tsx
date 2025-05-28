@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { PageHeaderProps } from "@/types";
 
-const PageHeader = ({ title, options }: PageHeaderProps) => {
+const PageHeader = ({ title, options, onAdd }: PageHeaderProps) => {
   return (
     <div className="container bg-surface rounded-2xl flex justify-between items-center w-full px-8 py-4">
       <Label className="text-secondary-text md:text-3xl font-bold">{title}</Label>
@@ -17,26 +17,29 @@ const PageHeader = ({ title, options }: PageHeaderProps) => {
         {options &&
           <DropdownMenu modal={false}>
             <DropdownMenuTrigger asChild>
-              <Button className="hover:bg-transparent bg-transparent text-inherit hover:text-on-cta !px-0">
+              <Button variant="link" className="hover:text-foreground !pl-1 !pr-0">
                 <Ellipsis className="!w-8 !h-8" />
               </Button>
             </DropdownMenuTrigger>
 
-              <DropdownMenuContent>
-                {Object.keys(options).map( (option, index) =>
-                  <DropdownMenuItem key={index} className={`text-lg ${options[option] && "text-destructive"}`}>
-                    {option}
-                  </DropdownMenuItem>
-                )}
-              </DropdownMenuContent>
+            <DropdownMenuContent>
+              {options.map( (option, index) =>
+                <DropdownMenuItem key={index} className={`text-lg ${option.isDestructive && "text-destructive"}`}>
+                  {option.optionName}
+                </DropdownMenuItem>
+              )}
+            </DropdownMenuContent>
           </DropdownMenu>
         }
 
-        <Button className="hover:bg-transparent bg-transparent text-inherit hover:text-foreground !pl-1 !pr-0">
-          <Plus className="!w-8 !h-8" />
-        </Button>
+        {/* Only show add button if there's an onAdd method */}
+        {onAdd &&
+          <Button type="button" onClick={onAdd} variant="link" className="text-accent hover:text-foreground !px-0 cursor-pointer">
+            <Plus className="!w-8 !h-8" />
+          </Button>
+        }
       </div>
-  </div>
+    </div>
   )
 }
 export default PageHeader;

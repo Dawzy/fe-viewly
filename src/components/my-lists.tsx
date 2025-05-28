@@ -1,36 +1,100 @@
 "use client";
 
-import { useSearchParams  } from "next/navigation"
-import { listsOptions } from "@/api/query-options";
+import { listsQueryOptions } from "@/query-api/query-options";
 import { useQuery } from "@tanstack/react-query";
-import Spinner from "./spinner";
+import { useDeleteListMutation, useNewListMutation, useRenameListMutation } from "@/query-api/mutations";
+import {
+  ListCard,
+  LoadingListCard,
+  PageHeader,
+  Spinner
+} from "@/components";
+import { List } from "@/types";
+import { useInputDialog } from "@/contexts/InputDialogContext";
+import toast from "react-hot-toast";
 
 const MyLists = () => {
-  const searchParams = useSearchParams();
-  const page = searchParams.get("page");
-  
+  const { showDialog } = useInputDialog();
   const {
     data,
     isLoading,
     isError
-  } = useQuery(listsOptions( parseInt(page || "1") ));
+  } = useQuery(listsQueryOptions());
 
+  // Mutations
+  const {
+    mutate: createNewList,
+    isPending: pendingNewList
+  } = useNewListMutation();
+
+  const {
+    mutate: renameList,
+    isPending: pendingListRename,
+    variables: renameVars
+  } = useRenameListMutation();
+
+  const {
+    mutate: deleteList,
+    isPending: pendingListDelete,
+    variables: deleteVars
+  } = useDeleteListMutation();
+
+  // UI Methods
+  // const triggerNewListModal = () =>
+  //   showDialog({
+  //     onConfirm: (name: List["name"]) => createNewList({ name }),
+  
+  //     title: "Create New List",
+  //     desc: "Enter the name of the new movie list.",
+    
+  //     label: "Name",
+  //     isDestructive: false,
+  //     confirmButtonText: "Create",
+  //     maxInputLength: 20
+  //   });
+
+  const triggerNewListModal = () => toast.success("TEST")
   
   if (isLoading) return (
-    <div className="flex justify-center items-center w-full h-auto">
+    <div className="page w-full px-8 py-4 gap-4 flex-wrap justify-center items-center h-auto">
       <Spinner />
     </div>
   );
   
-  if (isError) return (
-    <div className="flex justify-center items-center w-full h-auto text-2xl">
+  if (isError || !data) return (
+    <div className="page w-full px-8 py-4 gap-4 flex-wrap justify-center items-center h-auto text-2xl">
       <p>Error loading lists, please try again later.</p>
     </div>
   );
-  
+
   return (
     <>
-      MY LISTS {page}
+      {/* Page Header */}
+      <PageHeader
+        title="My Lists"
+        onAdd={triggerNewListModal}
+      />
+
+      {/* Page Content */}
+      <div className="page w-full px-8 py-4 gap-4 flex-wrap justify-between content-start">
+        {data.map(list => {
+          if (pendingListRename || pendingListDelete) {
+            if (deleteVars?.id == list.id || renameVars?.id == list.id) 
+              return (<LoadingListCard key={list.id} />);
+          }
+
+          return (
+            <ListCard
+              key={list.id}
+              list={list}
+              onRename={(name: List["name"]) => renameList({ name, id: list.id })}
+              onDelete={() => deleteList({ id: list.id })}
+            />
+          );
+        })}
+
+        {pendingNewList && <LoadingListCard/>}
+      </div>
     </>
   )
 }

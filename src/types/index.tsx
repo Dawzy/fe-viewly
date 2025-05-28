@@ -1,38 +1,56 @@
-type PageHeaderOption = {
-  [key: string]: boolean; // True if is destructive (requires contrasted text like red)
-};
-
-export type List = {
-  id: string;
-  movies: Movie[];
-}
-
 export type Movie = {
   id: string;
   name: string;
 }
 
+export type List = {
+  id: string;
+  name: string;
+  movies: Movie[];
+  createdAt: string;
+}
+
+export type InputDialogProps = {
+  onConfirm: (...args: any[]) => void;
+  
+  title: string;
+  desc: string;
+
+  label?: string;
+  confirmButtonText?: string;
+  maxInputLength?: number;
+
+  isDestructive?: boolean;
+  destructiveWord?: string;
+}
+
+export interface IPageHeaderOption {
+  optionName: string;
+  onClick: () => void;
+  isDestructive: boolean;
+}
+
 export interface PageHeaderProps {
   title: string;
-  options?: PageHeaderOption;
-  showAddButton?: boolean;
+  options?: IPageHeaderOption[];
+  onAdd?: () => void;
 }
 
-// export interface IListsPayload {
-//   page?: number;
-//   perPage?: number;
-// }
-
-export interface IListsResponse {
-  data: List[];
+export interface ListCardProps {
+  list: List;
+  onRename: (...args: any[]) => void;
+  onDelete: (...args: any[]) => void;
 }
 
-export interface IListPayload {
-  id: List["id"];
-  // page?: number;
-  // perPage?: number;
+export interface MoviesProps {
+  listId: List["id"];
 }
 
-export interface IListResponse {
-  data: Movie[];
+export interface MovieCardProps {
+  movie: Movie;
 }
+
+export interface IMovieActionPayload {
+  listId: List["id"];
+  movieId: Movie["id"];
+};

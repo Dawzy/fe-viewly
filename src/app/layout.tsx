@@ -1,7 +1,7 @@
 import "./globals.css";
 
 import type { Metadata } from "next";
-import { Navbar } from "@/components";
+import { DialogProviders, Navbar } from "@/components";
 import { Poppins } from "next/font/google";
 
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
@@ -11,7 +11,6 @@ import { dark } from "@clerk/themes";
 import { NextThemeProvider } from "@/components";
 import { ClerkProvider } from "@clerk/nextjs";
 import { QueryProvider } from "@/components";
-import { InputDialogProvider } from "@/contexts/InputDialogContext";
 
 export const metadata: Metadata = {
   title: "Viewly",
@@ -35,10 +34,10 @@ export default function RootLayout({
         <body className={`${poppins.variable} antialiased flex flex-col sm:px-16 md:px-24 py-4 gap-4 min-h-screen`}>
           <NextThemeProvider defaultTheme="dark" attribute="class">
             <QueryProvider>
-              <InputDialogProvider>
+              <DialogProviders>
                 <Navbar />
                 {children}
-              </InputDialogProvider>
+              </DialogProviders>
               <ReactQueryDevtools initialIsOpen={false} />
             </QueryProvider>
             <Toaster

@@ -1,6 +1,6 @@
 "use client";
 
-import { useInputDialog } from "@/contexts/InputDialogContext";
+import { useInputDialog } from "@/contexts/input-dialog-context";
 import { Button } from "@/components/ui/button"
 import { Plus } from "lucide-react"
 import { List, MoviesProps } from "@/types";
@@ -14,6 +14,7 @@ import {
 import {
   useRenameListMutation,
   useDeleteListMutation,
+  useDeleteMovieMutation,
 } from "@/query-api/mutations";
 import {
   getDeleteDialogTemplate,
@@ -38,6 +39,12 @@ const MyMovies = ({ listId }: MoviesProps) => {
   const {
     mutateAsync: deleteList,
   } = useDeleteListMutation();
+
+  const {
+    mutate: deleteMovie,
+    isPending: pendingMovieDelete,
+    variables: movieVars
+  } = useDeleteMovieMutation();
 
   const onAdd = () => redirect("/browse");
 
@@ -91,9 +98,18 @@ const MyMovies = ({ listId }: MoviesProps) => {
       />
 
       {/* Page Content */}
-      <div className="page w-full px-4 py-4 gap-6 flex-wrap">
+      <div className="page w-full px-4 py-4 flex-wrap">
         {list.movies.map(movie =>
-          <MovieCard key={movie.id} movie={movie} />
+          <MovieCard
+            key={movie.id}
+            movie={movie}
+            onDelete={() => deleteMovie({ listId: list.id, movieId: movie.id })}
+            showLoading={
+              pendingMovieDelete &&
+              movieVars?.listId !== undefined &&
+              movie.id === movieVars.listId
+            }
+          />
         )}
 
         {/* Add movie button */}

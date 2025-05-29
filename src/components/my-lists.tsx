@@ -2,7 +2,11 @@
 
 import { listsQueryOptions } from "@/query-api/query-options";
 import { useQuery } from "@tanstack/react-query";
-import { useDeleteListMutation, useNewListMutation, useRenameListMutation } from "@/query-api/mutations";
+import {
+  useDeleteListMutation,
+  useNewListMutation,
+  useRenameListMutation
+} from "@/query-api/mutations";
 import {
   ListCard,
   LoadingListCard,
@@ -10,7 +14,7 @@ import {
   Spinner
 } from "@/components";
 import { List } from "@/types";
-import { useInputDialog } from "@/contexts/InputDialogContext";
+import { useInputDialog } from "@/contexts/input-dialog-context";
 import { getNewListDialogTemplate } from "@/utils";
 
 const MyLists = () => {

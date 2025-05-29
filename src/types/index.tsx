@@ -24,6 +24,16 @@ export type InputDialogProps = {
   destructiveWord?: string;
 }
 
+export type ConfirmDialogProps = {
+  onConfirm: (...args: any[]) => void;
+  title: string;
+  desc: string;
+  confirmButtonText?: string;
+  isDestructive?: boolean;
+}
+
+export type MovieInfoDialogProps = {}
+
 export interface IPageHeaderOption {
   optionName: string;
   onClick: () => void;
@@ -49,6 +59,8 @@ export interface MoviesProps {
 
 export interface MovieCardProps {
   movie: Movie;
+  onDelete: (...args: any[]) => void;
+  showLoading?: boolean;
 }
 
 export interface IMovieActionPayload {

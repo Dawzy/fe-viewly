@@ -2,7 +2,7 @@ import { ListCardProps } from "@/types";
 import { Ellipsis } from "lucide-react";
 import { Button } from "./ui/button";
 import Link from "next/link";
-import { useInputDialog } from "@/contexts/InputDialogContext";
+import { useInputDialog } from "@/contexts/input-dialog-context";
 import {
   DropdownMenu,
   DropdownMenuContent,

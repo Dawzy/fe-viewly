@@ -9,39 +9,33 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger
 } from "./ui/dropdown-menu";
+import { getDeleteDialogTemplate, getRenameDialogTemplate } from "@/utils";
 
 const ListCard = ({ list, onRename, onDelete }: ListCardProps) => {
   const { showDialog } = useInputDialog();
 
   const triggerRenameDialog = () =>
-    showDialog({
-      onConfirm: onRename,
-  
-      title: `Rename ${list.name}`,
-      desc: `Enter the new name of ${list.name}`,
-    
-      label: "Name",
-      confirmButtonText: "Rename",
-      maxInputLength: 20,
-    });
+    showDialog(
+      getRenameDialogTemplate(
+        onRename,
+        list.name
+      )
+    );
 
   const triggerDeleteDialog = () =>
-    showDialog({
-      onConfirm: onDelete,
-  
-      title: `Delete ${list?.name}`,
-      desc: `Are you sure want to delete ${list.name} with ${list.movies.length} movies?`,
-    
-      isDestructive: true,
-      destructiveWord: "DELETE",
-      confirmButtonText: "Delete"
-    });
+    showDialog(
+      getDeleteDialogTemplate(
+        onDelete,
+        list.name,
+        list.movies.length
+      )
+    );
 
   return (
     <div className="relative flex flex-col items-center h-min p-6 bg-on-surface rounded-2xl">
       <DropdownMenu modal={false}>
         <DropdownMenuTrigger asChild>
-          <Button className="absolute top-0 right-0 hover:bg-transparent bg-transparent cursor-pointer text-primary-text hover:text-accent transition-all">
+          <Button className="absolute top-0 right-0 hover:bg-transparent bg-transparent text-primary-text hover:text-accent transition-all">
             <Ellipsis className="!w-6 !h-6" />
           </Button>
         </DropdownMenuTrigger>

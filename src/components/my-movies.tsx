@@ -1,8 +1,9 @@
 "use client";
 
+import { useInputDialog } from "@/contexts/InputDialogContext";
 import { Button } from "@/components/ui/button"
 import { Plus } from "lucide-react"
-import { MoviesProps } from "@/types";
+import { List, MoviesProps } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 import { listQueryOptions } from "@/query-api/query-options";
 import {
@@ -10,13 +11,59 @@ import {
   Spinner,
   PageHeader
 } from "@/components";
+import {
+  useRenameListMutation,
+  useDeleteListMutation,
+} from "@/query-api/mutations";
+import {
+  getDeleteDialogTemplate,
+  getRenameDialogTemplate
+} from "@/utils";
+import { redirect } from "next/navigation";
 
 const MyMovies = ({ listId }: MoviesProps) => {
+  const { showDialog } = useInputDialog();
   const {
-    data,
+    data: list,
     isLoading,
     isError
   } = useQuery( listQueryOptions(listId) );
+
+  const {
+    mutate: renameList,
+    isPending: pendingListRename,
+    variables: renameVars
+  } = useRenameListMutation();
+
+  const {
+    mutateAsync: deleteList,
+  } = useDeleteListMutation();
+
+  const onAdd = () => redirect("/browse");
+
+  const triggerRenameDialog = () => {
+    if (!list) return;
+    showDialog(
+      getRenameDialogTemplate(
+        (name: List["name"]) => renameList({ name, id: list.id }),
+        list.name
+      )
+    );
+  }
+
+  const triggerDeleteDialog = () => {
+    if (!list) return;
+    showDialog(
+      getDeleteDialogTemplate(
+        async () => {
+          await deleteList({ id: list.id });
+          redirect("/lists");
+        },
+        list.name,
+        list.movies.length
+      )
+    );
+  }
 
   if (isLoading) return (
     <div className="page w-full px-4 py-4 gap-6 flex-wrap justify-center items-center h-auto">
@@ -24,7 +71,7 @@ const MyMovies = ({ listId }: MoviesProps) => {
     </div>
   );
   
-  if (isError || !data) return (
+  if (isError || !list) return (
     <div className="page w-full px-4 py-4 gap-6 flex-wrap justify-center items-center h-auto text-2xl">
       <p>Error loading movies, please try again later.</p>
     </div>
@@ -34,22 +81,23 @@ const MyMovies = ({ listId }: MoviesProps) => {
     <>
       {/* Page Header */}
       <PageHeader
-        title={data.name}
+        title={renameVars ? renameVars.name : list.name}
+        pendingChange={pendingListRename}
         options={[
-          { optionName: "Rename List", onClick: () => {}, isDestructive: false },
-          { optionName: "Delete List", onClick: () => {}, isDestructive: true  }
+          { optionName: "Add Movie", onClick: onAdd, isDestructive: false },
+          { optionName: "Rename List", onClick: triggerRenameDialog, isDestructive: false },
+          { optionName: "Delete List", onClick: triggerDeleteDialog, isDestructive: true  }
         ]}
-        onAdd={() => {}}
       />
 
       {/* Page Content */}
       <div className="page w-full px-4 py-4 gap-6 flex-wrap">
-        {data.movies.map(movie =>
+        {list.movies.map(movie =>
           <MovieCard key={movie.id} movie={movie} />
         )}
 
         {/* Add movie button */}
-        <Button className="flex justify-center items-center w-[122px] h-[162px] bg-on-surface rounded-2xl hover:bg-background">
+        <Button onClick={onAdd} className="flex justify-center items-center w-[122px] h-[162px] bg-on-surface rounded-2xl hover:bg-background">
           <Plus className="text-primary !h-12 !w-12" />
         </Button>
       </div>

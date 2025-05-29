@@ -34,6 +34,7 @@ export interface PageHeaderProps {
   title: string;
   options?: IPageHeaderOption[];
   onAdd?: () => void;
+  pendingChange?: boolean;
 }
 
 export interface ListCardProps {

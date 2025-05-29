@@ -20,10 +20,10 @@ export default async function Home() {
         Create and share beautifully organized movie lists. Track your watch time, and explore genres!
       </p>
       <div className="flex flex-col md:flex-row gap-4">
-        <Button className="min-w-30 py-5 px-6 text-lg cursor-pointer" asChild>
+        <Button className="min-w-30 py-5 px-6 text-lg" asChild>
           <SignInButton />
         </Button>
-        <Button className="min-w-30 py-5 px-6 text-lg cursor-pointer" asChild>
+        <Button className="min-w-30 py-5 px-6 text-lg" asChild>
           <SignUpButton />
         </Button>
       </div>

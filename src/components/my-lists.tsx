@@ -11,7 +11,7 @@ import {
 } from "@/components";
 import { List } from "@/types";
 import { useInputDialog } from "@/contexts/InputDialogContext";
-import toast from "react-hot-toast";
+import { getNewListDialogTemplate } from "@/utils";
 
 const MyLists = () => {
   const { showDialog } = useInputDialog();
@@ -40,20 +40,12 @@ const MyLists = () => {
   } = useDeleteListMutation();
 
   // UI Methods
-  // const triggerNewListModal = () =>
-  //   showDialog({
-  //     onConfirm: (name: List["name"]) => createNewList({ name }),
-  
-  //     title: "Create New List",
-  //     desc: "Enter the name of the new movie list.",
-    
-  //     label: "Name",
-  //     isDestructive: false,
-  //     confirmButtonText: "Create",
-  //     maxInputLength: 20
-  //   });
-
-  const triggerNewListModal = () => toast.success("TEST")
+  const triggerNewListModal = () =>
+    showDialog(
+      getNewListDialogTemplate(
+        (name: List["name"]) => createNewList({ name })
+      )
+    );
   
   if (isLoading) return (
     <div className="page w-full px-8 py-4 gap-4 flex-wrap justify-center items-center h-auto">

@@ -29,9 +29,10 @@ const MovieCard = ({
         <Image
           src={imgs[Math.floor(Math.random()*imgs.length)]}
           alt=""
-          className="rounded-2xl w-full h-full object-cover"
+          className={`rounded-2xl w-full h-full object-cover ${!showLoading && "hover:scale-110 transition-all cursor-pointer"}`}
           width={122}
           height={162}
+          onClick={() => {}}
         />
 
         {showLoading &&

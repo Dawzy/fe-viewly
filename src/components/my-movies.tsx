@@ -98,9 +98,10 @@ const MyMovies = ({ listId }: MoviesProps) => {
       />
 
       {/* Page Content */}
-      <div className="page w-full px-4 py-4 flex-wrap">
-        {list.movies.map(movie =>
-          <MovieCard
+      <div className="page w-full px-4 py-4 justify-center">
+        <div className="grid gap-4 grid-cols-[repeat(auto-fit,minmax(130px,1fr))] max-w-6xl w-full px-4">
+          {list.movies.map(movie =>
+            <MovieCard
             key={movie.id}
             movie={movie}
             onDelete={() => deleteMovie({ listId: list.id, movieId: movie.id })}
@@ -109,13 +110,14 @@ const MyMovies = ({ listId }: MoviesProps) => {
               movieVars?.listId !== undefined &&
               movie.id === movieVars.listId
             }
-          />
-        )}
+            />
+          )}
 
-        {/* Add movie button */}
-        <Button onClick={onAdd} className="flex justify-center items-center w-[122px] h-[162px] bg-on-surface rounded-2xl hover:bg-background">
-          <Plus className="text-primary !h-12 !w-12" />
-        </Button>
+          {/* Add movie button */}
+          <Button onClick={onAdd} className="flex justify-center items-center w-[122px] h-[162px] bg-on-surface rounded-2xl hover:bg-background">
+            <Plus className="text-primary !h-12 !w-12" />
+          </Button>
+        </div>
       </div>
     </>
   )

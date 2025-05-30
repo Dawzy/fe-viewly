@@ -72,24 +72,26 @@ const MyLists = () => {
       />
 
       {/* Page Content */}
-      <div className="page w-full px-8 py-4 gap-4 flex-wrap justify-between content-start">
-        {data.map(list => {
-          if (pendingListRename || pendingListDelete) {
-            if (deleteVars?.id == list.id || renameVars?.id == list.id) 
-              return (<LoadingListCard key={list.id} />);
-          }
+      <div className="page w-full px-8 py-4 gap-4 flex-wrap justify-center">
+        <div className="grid gap-4 grid-cols-[repeat(auto-fit,minmax(208px,1fr))] max-w-6xl w-full px-4">
+          {data.map(list => {
+            if (pendingListRename || pendingListDelete) {
+              if (deleteVars?.id == list.id || renameVars?.id == list.id) 
+                return (<LoadingListCard key={list.id} />);
+            }
 
-          return (
-            <ListCard
-              key={list.id}
-              list={list}
-              onRename={(name: List["name"]) => renameList({ name, id: list.id })}
-              onDelete={() => deleteList({ id: list.id })}
-            />
-          );
-        })}
+            return (
+              <ListCard
+                key={list.id}
+                list={list}
+                onRename={(name: List["name"]) => renameList({ name, id: list.id })}
+                onDelete={() => deleteList({ id: list.id })}
+              />
+            );
+          })}
 
-        {pendingNewList && <LoadingListCard/>}
+          {pendingNewList && <LoadingListCard/>}
+        </div>
       </div>
     </>
   )

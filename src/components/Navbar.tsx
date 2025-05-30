@@ -10,7 +10,7 @@ import { usePathname } from "next/navigation";
 const Links = () => {
   const pathname = usePathname();
   const isOnBrowse = pathname.startsWith("/browse");
-  const isOnLists = pathname.startsWith("/lists");
+  const isOnLists = pathname === "/lists"; //.startsWith("/lists");
 
   return (
     <>

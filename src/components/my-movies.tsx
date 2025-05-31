@@ -14,7 +14,7 @@ import {
 import {
   useRenameListMutation,
   useDeleteListMutation,
-  useDeleteMovieMutation,
+  usePatchMovieMutation,
 } from "@/query-api/mutations";
 import {
   getDeleteDialogTemplate,
@@ -44,7 +44,7 @@ const MyMovies = ({ listId }: MoviesProps) => {
     mutate: deleteMovie,
     isPending: pendingMovieDelete,
     variables: movieVars
-  } = useDeleteMovieMutation();
+  } = usePatchMovieMutation();
 
   const onAdd = () => redirect("/browse");
 
@@ -104,7 +104,7 @@ const MyMovies = ({ listId }: MoviesProps) => {
             <MovieCard
               key={movie.id}
               movie={movie}
-              onDelete={() => deleteMovie({ listId: list.listId, movieId: movie.id })}
+              onDelete={() => deleteMovie({ listId: list.listId, movies: list.movies.filter(m => m.id === movie.id) })}
               showLoading={
                 pendingMovieDelete &&
                 movieVars?.listId !== undefined &&

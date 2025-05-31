@@ -66,5 +66,5 @@ export interface MovieCardProps {
 
 export interface IMovieActionPayload {
   listId: List["listId"];
-  movieId: Movie["id"];
+  movies: Movie[];
 };

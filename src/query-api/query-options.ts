@@ -9,9 +9,9 @@ export const listsQueryOptions = () => {
   });
 }
 
-export const listQueryOptions = ( id: List["listId"] ) => {
+export const listQueryOptions = ( listId: List["listId"] ) => {
   return queryOptions({
-    queryKey: ["list", { id }],
-    queryFn: () => getList({ id })
+    queryKey: ["list", { listId }],
+    queryFn: () => getList({ listId })
   });
 }

@@ -7,9 +7,8 @@ import {
 
 import {
   deleteList,
-  deleteMovie,
   newList,
-  putMovie,
+  patchMovies,
   renameList
 } from "./actions";
 import toast from "react-hot-toast";
@@ -45,22 +44,12 @@ export const useRenameListMutation = () => {
   });
 };
 
-export const usePutMovieMutation = () => {
+export const usePatchMovieMutation = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: putMovie,
+    mutationFn: patchMovies,
     onSettled: () => queryClient.invalidateQueries({ queryKey: ["lists"] }),
-    onError: () => toast.error("Failed to add movie.")
-  });
-};
-
-export const useDeleteMovieMutation = () => {
-  const queryClient = useQueryClient();
-
-  return useMutation({
-    mutationFn: deleteMovie,
-    onSettled: () => queryClient.invalidateQueries({ queryKey: ["lists"] }),
-    onError: () => toast.error("Failed to remove movie.")
+    onError: () => toast.error("Failed to edit list.")
   });
 };

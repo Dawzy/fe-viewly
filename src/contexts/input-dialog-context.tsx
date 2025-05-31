@@ -22,6 +22,7 @@ import {
   useRef,
   useState
 } from "react";
+import { sanitize } from "@/utils";
 
 const DEFAULT_VALUE: InputDialogProps = {
   onConfirm: (_: List["listName"]) => {},
@@ -134,7 +135,7 @@ export const InputDialogProvider = ({
             </Label>
             <Input
               value={value}
-              onChange={(e) => setValue(e.target.value.substring(0, maxInputLength))}
+              onChange={(e) => setValue(sanitize(e.target.value).substring(0, maxInputLength))}
               className="col-span-5 col-start-2"
               placeholder={isDestructive ? "DELETE": ""}
             />

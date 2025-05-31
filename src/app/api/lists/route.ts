@@ -2,6 +2,7 @@
 
 import { axiosServerInstance } from "@/axios";
 import { List } from "@/types";
+import { MAX_LIST_NAME_LENGTH, sanitize } from "@/utils";
 import { auth } from "@clerk/nextjs/server";
 import { NextRequest, NextResponse } from "next/server";
 import { v4 as uuidv4 } from 'uuid';
@@ -39,27 +40,21 @@ let mockLists: List[] = [
 ];
 
 export async function GET(request: NextRequest) {
-  // TO DO: Get list of lists
-    // Get user token
-    // Consume AWS API
-    // Delegate status to front end
-      // Return lists
-
   // Get token
   const { getToken } = await auth();
   const token = await getToken();
 
   // Get user's list
-  // const { data } = await axiosServerInstance({
-  //   method: "get",
-  //   url: process.env.AWS_API_GATEWAY_URL,
-  //   headers: {
-  //     Authorization: `Bearer ${token}`,
-  //     "Content-Type": "application/json"
-  //   }
-  // });
+  const { data } = await axiosServerInstance({
+    method: "get",
+    url: process.env.AWS_API_GATEWAY_URL,
+    headers: {
+      "Authorization": `Bearer ${token}`,
+      "Content-Type": "application/json"
+    }
+  });
 
-  return NextResponse.json(mockLists, {
+  return NextResponse.json(data, {
     status: 200,
     headers: {
       "Content-Type": "application/json"
@@ -68,48 +63,49 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
-  // TO DO: Create new list
-    // Get user token
-    // Get list name
-    // Create list object
-    // Consume AWS API
-    // Delegate status to front end
-    // Return new list
+  // List name
+  let { listName } = await request.json();
   
-  const { getToken } = await auth();
-  const token = await getToken();
-  const { name: listName } = await request.json();
-  
-  // TODO: SANITIZE
-  if (validator.isEmpty(listName))
-    return NextResponse.json({ message: "Name cannot be empty." }, {
+  // Sanitize
+  try {
+    if (!listName)
+      throw new Error("Missing name field");
+
+    listName = listName.trim();
+    
+    // Constrain type
+    if (typeof listName !== "string")
+      throw new Error("Invalid type");
+
+    // Constrain length
+    if (!validator.isLength(listName, { min: 1, max: MAX_LIST_NAME_LENGTH }))
+      throw new Error("Invalid name length");
+    
+    listName = sanitize(listName);
+
+  } catch(err: any) {
+    return NextResponse.json({ message: err.message }, {
       status: 400,
       headers: {"Content-Type": "application/json"},
     });
-
-  const creationDate = new Date().toISOString();
-  const newList: List = {
-    listId: uuidv4(),
-    listName: listName,
-    movies: [],
-    createdAt: creationDate,
-    updatedAt: creationDate
   }
+  
+  // Add new list to DB
+  const { getToken } = await auth();
+  const token = await getToken();
 
-  mockLists.push(newList);
+  const { data } = await axiosServerInstance({
+    method: "post",
+    url: process.env.AWS_API_GATEWAY_URL,
+    headers: {
+      "Authorization": `Bearer ${token}`,
+      "Content-Type": "application/json"
+    },
+    data: { listId: uuidv4(), listName }
+  });
 
-  // Add new empty list to DB
-  // const res = await axiosServerInstance({
-  //   method: "put",
-  //   url: process.env.AWS_API_GATEWAY_URL,
-  //   headers: {
-  //     Authorization: `Bearer ${token}`,
-  //     "Content-Type": "application/json"
-  //   }
-  // });
-
-  return NextResponse.json(newList, {
-    status: 200,
+  return NextResponse.json(data, {
+    status: data.statusCode,
     headers: {
       "Content-Type": "application/json"
     },

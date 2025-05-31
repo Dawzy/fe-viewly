@@ -58,20 +58,12 @@ export const renameList = async (
   return data;
 }
 
-export const putMovie = async (
+export const patchMovies = async (
   payload: IMovieActionPayload
 ): Promise<void> => {
   await axiosClientInstance({
-    method: "put",
-    url: `${LISTS_URL}/${payload["listId"]}/${payload["movieId"]}`,
-  });
-}
-
-export const deleteMovie = async (
-  payload: IMovieActionPayload
-): Promise<void> => {
-  await axiosClientInstance({
-    method: "delete",
-    url:`${LISTS_URL}/${payload["listId"]}/${payload["movieId"]}`,
+    method: "patch",
+    url: `${LISTS_URL}/${payload["listId"]}}`,
+    data: { movies: payload.movies }
   });
 }

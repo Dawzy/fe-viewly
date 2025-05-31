@@ -2,12 +2,13 @@ import img1 from "/public/image 1.png"
 import img2 from "/public/image 2.png"
 import img3 from "/public/image 3.png"
 import img4 from "/public/image 4.png"
-
 import { InputDialogProps, List } from "@/types";
 
-export const getMockData = () => {
-  return [img1, img2, img3, img4];
-}
+export const MAX_LIST_NAME_LENGTH = 20;
+
+export const getMockData = () => [img1, img2, img3, img4];
+
+export const sanitize = (str: string) => str.replace(/[<>\"'&]/g, "").replace(/\s+/g, " ");
 
 export const getNewListDialogTemplate = (
   onConfirm: InputDialogProps["onConfirm"]
@@ -20,7 +21,7 @@ export const getNewListDialogTemplate = (
     label: "Name",
     isDestructive: false,
     confirmButtonText: "Create",
-    maxInputLength: 20
+    maxInputLength: MAX_LIST_NAME_LENGTH
   }
 }
 
@@ -36,7 +37,7 @@ export const getRenameDialogTemplate = (
   
     label: "Name",
     confirmButtonText: "Rename",
-    maxInputLength: 20,
+    maxInputLength: MAX_LIST_NAME_LENGTH,
   }
 }
 

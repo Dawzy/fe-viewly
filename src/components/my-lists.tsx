@@ -47,7 +47,7 @@ const MyLists = () => {
   const triggerNewListModal = () =>
     showDialog(
       getNewListDialogTemplate(
-        (name: List["name"]) => createNewList({ name })
+        (listName: List["listName"]) => createNewList({ listName })
       )
     );
   
@@ -76,16 +76,16 @@ const MyLists = () => {
         <div className="grid gap-4 grid-cols-[repeat(auto-fit,minmax(208px,1fr))] max-w-6xl w-full px-4">
           {data.map(list => {
             if (pendingListRename || pendingListDelete) {
-              if (deleteVars?.id == list.id || renameVars?.id == list.id) 
-                return (<LoadingListCard key={list.id} />);
+              if (deleteVars?.listId == list.listId || renameVars?.listId == list.listId) 
+                return (<LoadingListCard key={list.listId} />);
             }
 
             return (
               <ListCard
-                key={list.id}
+                key={list.listId}
                 list={list}
-                onRename={(name: List["name"]) => renameList({ name, id: list.id })}
-                onDelete={() => deleteList({ id: list.id })}
+                onRename={(listName: List["listName"]) => renameList({ listName, listId: list.listId })}
+                onDelete={() => deleteList({ listId: list.listId })}
               />
             );
           })}

@@ -26,7 +26,7 @@ export const getNewListDialogTemplate = (
 
 export const getRenameDialogTemplate = (
   onConfirm: InputDialogProps["onConfirm"],
-  name: List["name"]
+  name: List["listName"]
 ) => {
   return {
     onConfirm,
@@ -42,7 +42,7 @@ export const getRenameDialogTemplate = (
 
 export const getDeleteDialogTemplate = (
   onConfirm: InputDialogProps["onConfirm"],
-  name: List["name"],
+  name: List["listName"],
   length: number
 ) => {
   return {

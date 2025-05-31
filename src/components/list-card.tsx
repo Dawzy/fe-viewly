@@ -18,7 +18,7 @@ const ListCard = ({ list, onRename, onDelete }: ListCardProps) => {
     showDialog(
       getRenameDialogTemplate(
         onRename,
-        list.name
+        list.listName
       )
     );
 
@@ -26,7 +26,7 @@ const ListCard = ({ list, onRename, onDelete }: ListCardProps) => {
     showDialog(
       getDeleteDialogTemplate(
         onDelete,
-        list.name,
+        list.listName,
         list.movies.length
       )
     );
@@ -50,8 +50,8 @@ const ListCard = ({ list, onRename, onDelete }: ListCardProps) => {
         </DropdownMenuContent>
       </DropdownMenu>
 
-      <Link className="text-primary-text hover:text-accent transition-all text-center" href={`/lists/${list.id}`} >
-        <h2 className="w-44 text-xl font-semibold text-center">{list.name}</h2>
+      <Link className="text-primary-text hover:text-accent transition-all text-center" href={`/lists/${list.listId}`} >
+        <h2 className="w-44 text-xl font-semibold text-center">{list.listName}</h2>
         <p className="text-sm text-secondary-text mt-1">
           {list.movies.length} {list.movies.length === 1 ? "movie" : "movies"}
         </p>

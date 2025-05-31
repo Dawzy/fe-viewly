@@ -4,10 +4,11 @@ export type Movie = {
 }
 
 export type List = {
-  id: string;
-  name: string;
+  listId: string;
+  listName: string;
   movies: Movie[];
   createdAt: string;
+  updatedAt: string;
 }
 
 export type InputDialogProps = {
@@ -54,7 +55,7 @@ export interface ListCardProps {
 }
 
 export interface MoviesProps {
-  listId: List["id"];
+  listId: List["listId"];
 }
 
 export interface MovieCardProps {
@@ -64,6 +65,6 @@ export interface MovieCardProps {
 }
 
 export interface IMovieActionPayload {
-  listId: List["id"];
+  listId: List["listId"];
   movieId: Movie["id"];
 };

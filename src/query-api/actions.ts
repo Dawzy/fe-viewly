@@ -15,18 +15,18 @@ export const getLists = async (): Promise<List[]> => {
 }
 
 export const getList = async (
-  payload: Pick<List, "id">
+  payload: Pick<List, "listId">
 ): Promise<List> => {
   const { data } = await axiosClientInstance({
     method: "get",
-    url: `${LISTS_URL}/${payload["id"]}`,
+    url: `${LISTS_URL}/${payload["listId"]}`,
   });
 
   return data;
 }
 
 export const newList = async (
-  payload: Pick<List, "name">
+  payload: Pick<List, "listName">
 ): Promise<List> => {
   const { data } = await axiosClientInstance({
     method: "post",
@@ -38,20 +38,20 @@ export const newList = async (
 }
 
 export const deleteList = async (
-  payload: Pick<List, "id">
+  payload: Pick<List, "listId">
 ): Promise<void> => {
   await axiosClientInstance({
     method: "delete",
-    url:`${LISTS_URL}/${payload["id"]}`,
+    url:`${LISTS_URL}/${payload["listId"]}`,
   });
 }
 
 export const renameList = async (
-  payload: Pick<List, "id" | "name">
+  payload: Pick<List, "listId" | "listName">
 ): Promise<List> => {
   const { data } = await axiosClientInstance({
     method: "patch",
-    url:`${LISTS_URL}/${payload["id"]}`,
+    url:`${LISTS_URL}/${payload["listId"]}`,
     data: payload
   });
 

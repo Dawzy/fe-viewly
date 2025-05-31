@@ -52,8 +52,8 @@ const MyMovies = ({ listId }: MoviesProps) => {
     if (!list) return;
     showDialog(
       getRenameDialogTemplate(
-        (name: List["name"]) => renameList({ name, id: list.id }),
-        list.name
+        (listName: List["listName"]) => renameList({ listName, listId: list.listId }),
+        list.listName
       )
     );
   }
@@ -63,10 +63,10 @@ const MyMovies = ({ listId }: MoviesProps) => {
     showDialog(
       getDeleteDialogTemplate(
         async () => {
-          await deleteList({ id: list.id });
+          await deleteList({ listId: list.listId });
           redirect("/lists");
         },
-        list.name,
+        list.listName,
         list.movies.length
       )
     );
@@ -88,7 +88,7 @@ const MyMovies = ({ listId }: MoviesProps) => {
     <>
       {/* Page Header */}
       <PageHeader
-        title={renameVars ? renameVars.name : list.name}
+        title={renameVars ? renameVars.listName : list.listName}
         pendingChange={pendingListRename}
         options={[
           { optionName: "Add Movie", onClick: onAdd, isDestructive: false },
@@ -102,14 +102,14 @@ const MyMovies = ({ listId }: MoviesProps) => {
         <div className="grid gap-4 grid-cols-[repeat(auto-fit,minmax(130px,1fr))] max-w-6xl w-full px-4">
           {list.movies.map(movie =>
             <MovieCard
-            key={movie.id}
-            movie={movie}
-            onDelete={() => deleteMovie({ listId: list.id, movieId: movie.id })}
-            showLoading={
-              pendingMovieDelete &&
-              movieVars?.listId !== undefined &&
-              movie.id === movieVars.listId
-            }
+              key={movie.id}
+              movie={movie}
+              onDelete={() => deleteMovie({ listId: list.listId, movieId: movie.id })}
+              showLoading={
+                pendingMovieDelete &&
+                movieVars?.listId !== undefined &&
+                movie.id === movieVars.listId
+              }
             />
           )}
 

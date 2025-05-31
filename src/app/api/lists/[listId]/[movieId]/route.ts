@@ -60,7 +60,6 @@ export async function DELETE(
   const { getToken } = await auth();
   const token = await getToken();
   const { listId, movieId } = await params;
-  const { newName } = await request.json();
 
   // Get list data from DB
   // const res = await axiosServerInstance({

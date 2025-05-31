@@ -24,7 +24,7 @@ import {
 } from "react";
 
 const DEFAULT_VALUE: InputDialogProps = {
-  onConfirm: (_: List["name"]) => {},
+  onConfirm: (_: List["listName"]) => {},
   title: "",
   desc: "",
   label: "",

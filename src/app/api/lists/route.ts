@@ -9,28 +9,32 @@ import validator from "validator";
 
 let mockLists: List[] = [
   {
-    id: "1",
-    name: "Action Favorites",
+    listId: "1",
+    listName: "Action Favorites",
     movies: [],
     createdAt: new Date("2024-01-10").toISOString(),
+    updatedAt: new Date("2024-01-10").toISOString(),
   },
   {
-    id: "2",
-    name: "Comedy Nights",
+    listId: "2",
+    listName: "Comedy Nights",
     movies: [],
     createdAt: new Date("2024-02-15").toISOString(),
+    updatedAt: new Date("2024-02-15").toISOString(),
   },
   {
-    id: "3",
-    name: "Drama Picks",
+    listId: "3",
+    listName: "Drama Picks",
     movies: [],
     createdAt: new Date("2024-03-20").toISOString(),
+    updatedAt: new Date("2024-03-20").toISOString(),
   },
   {
-    id: "4",
-    name: "Sci-Fi Classics",
+    listId: "4",
+    listName: "Sci-Fi Classics",
     movies: [],
     createdAt: new Date("2024-04-25").toISOString(),
+    updatedAt: new Date("2024-04-25").toISOString(),
   },
 ];
 
@@ -46,16 +50,14 @@ export async function GET(request: NextRequest) {
   const token = await getToken();
 
   // Get user's list
-  // const res = await axiosServerInstance({
+  // const { data } = await axiosServerInstance({
   //   method: "get",
   //   url: process.env.AWS_API_GATEWAY_URL,
   //   headers: {
-  //     Authorization: `Bearer ${to,ken}`
+  //     Authorization: `Bearer ${token}`,
   //     "Content-Type": "application/json"
   //   }
   // });
-
-  // console.log(res, res.data);
 
   return NextResponse.json(mockLists, {
     status: 200,
@@ -85,11 +87,13 @@ export async function POST(request: NextRequest) {
       headers: {"Content-Type": "application/json"},
     });
 
+  const creationDate = new Date().toISOString();
   const newList: List = {
-    id: uuidv4(),
-    name: listName,
+    listId: uuidv4(),
+    listName: listName,
     movies: [],
-    createdAt: new Date().toISOString()
+    createdAt: creationDate,
+    updatedAt: creationDate
   }
 
   mockLists.push(newList);

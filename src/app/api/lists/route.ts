@@ -2,11 +2,11 @@
 
 import { axiosServerInstance } from "@/axios";
 import { List } from "@/types";
-import { MAX_LIST_NAME_LENGTH, sanitize } from "@/utils";
+import { sanitizeString, verifyListName } from "@/utils";
+import { errorWrapper } from "@/utils/api-wrapper";
 import { auth } from "@clerk/nextjs/server";
 import { NextRequest, NextResponse } from "next/server";
 import { v4 as uuidv4 } from 'uuid';
-import validator from "validator";
 
 let mockLists: List[] = [
   {
@@ -39,13 +39,13 @@ let mockLists: List[] = [
   },
 ];
 
-export async function GET(request: NextRequest) {
+async function handleGET(_request: NextRequest) {
   // Get token
   const { getToken } = await auth();
   const token = await getToken();
 
   // Get user's list
-  const { data } = await axiosServerInstance({
+  const { data: lists } = await axiosServerInstance({
     method: "get",
     url: process.env.AWS_API_GATEWAY_URL,
     headers: {
@@ -54,7 +54,7 @@ export async function GET(request: NextRequest) {
     }
   });
 
-  return NextResponse.json(data, {
+  return NextResponse.json(lists, {
     status: 200,
     headers: {
       "Content-Type": "application/json"
@@ -62,33 +62,14 @@ export async function GET(request: NextRequest) {
   });
 }
 
-export async function POST(request: NextRequest) {
+export async function handlePOST(request: NextRequest) {
   // List name
   let { listName } = await request.json();
   
-  // Sanitize
-  try {
-    if (!listName)
-      throw new Error("Missing name field");
-
-    listName = listName.trim();
-    
-    // Constrain type
-    if (typeof listName !== "string")
-      throw new Error("Invalid type");
-
-    // Constrain length
-    if (!validator.isLength(listName, { min: 1, max: MAX_LIST_NAME_LENGTH }))
-      throw new Error("Invalid name length");
-    
-    listName = sanitize(listName);
-
-  } catch(err: any) {
-    return NextResponse.json({ message: err.message }, {
-      status: 400,
-      headers: {"Content-Type": "application/json"},
-    });
-  }
+  // Sanitize list name
+  listName = listName.trim();
+  listName = sanitizeString(listName);
+  verifyListName(listName);
   
   // Add new list to DB
   const { getToken } = await auth();
@@ -111,3 +92,6 @@ export async function POST(request: NextRequest) {
     },
   });
 }
+
+export const GET = errorWrapper(handleGET);
+export const POST = errorWrapper(handlePOST);

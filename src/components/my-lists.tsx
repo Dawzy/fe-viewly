@@ -15,7 +15,7 @@ import {
 } from "@/components";
 import { List } from "@/types";
 import { useInputDialog } from "@/contexts/input-dialog-context";
-import { getNewListDialogTemplate } from "@/utils";
+import { getNewListDialogTemplate } from "@/utils/dialog-templates";
 
 const MyLists = () => {
   const { showDialog } = useInputDialog();

@@ -9,7 +9,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger
 } from "./ui/dropdown-menu";
-import { getDeleteDialogTemplate, getRenameDialogTemplate } from "@/utils";
+import { getDeleteDialogTemplate, getRenameDialogTemplate } from "@/utils/dialog-templates";
 
 const ListCard = ({ list, onRename, onDelete }: ListCardProps) => {
   const { showDialog } = useInputDialog();

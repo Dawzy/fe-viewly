@@ -1,36 +1,32 @@
 "use server";
 
 import { axiosServerInstance } from "@/axios";
-import { MAX_LIST_NAME_LENGTH, sanitize } from "@/utils";
+import { sanitizeString, verifyListName } from "@/utils";
+import { errorWrapper } from "@/utils/api-wrapper";
 import { auth } from "@clerk/nextjs/server";
 import { NextRequest, NextResponse } from "next/server";
 import validator from "validator";
 
-export async function GET(
-  request: NextRequest,
+async function handleGET(
+  _request: NextRequest,
   { params }: { params: Promise<{ listId: string }> }
 ) {
   const { listId } = await params;
 
   // Make sure list ID is a valid uuid v4
   if (!listId || !validator.isUUID(listId, 4))
-    return NextResponse.json({ message: "Invalid id" }, {
-      status: 400,
-      headers: {
-        "Content-Type": "application/json"
-      },
-    });
+    throw new AppError("Invalid list id", 400);
 
   // Get list data from DB
-  const { getToken } = await auth();
-  const token = await getToken();
-  const { data: list } = await axiosServerInstance({
-    method: "get",
-    url: `${process.env.AWS_API_GATEWAY_URL}/${listId}`,
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  });
+  // const { getToken } = await auth();
+  // const token = await getToken();
+  // const { data: list } = await axiosServerInstance({
+  //   method: "get",
+  //   url: `${process.env.AWS_API_GATEWAY_URL}/${listId}`,
+  //   headers: {
+  //     Authorization: `Bearer ${token}`
+  //   }
+  // });
 
   // TO DO: GET ALL MOVIES DATA FROM TMDB
   const mockList = {
@@ -55,60 +51,44 @@ export async function GET(
   });
 }
 
-export async function PATCH(
+async function handlePATCH(
   request: NextRequest,
   { params }: { params: Promise<{ listId: string }> }
 ) {
   const { listId } = await params;
-  let { listName, movies } = await request.json();
-  const payload: any = {};
-  
-  // Sanitize name
-  if (listName) {
-    try {
-      if (!listName)
-        throw new Error("Missing fields field");
-  
-      listName = listName.trim();
-      
-      // Constrain type
-      if (typeof listName !== "string")
-        throw new Error("Invalid type");
-  
-      // Constrain length
-      if (!validator.isLength(listName, { min: 1, max: MAX_LIST_NAME_LENGTH }))
-        throw new Error("Invalid name length");
-      
-      listName = sanitize(listName);
+  let body = await request.json();
+  const payload: any = {}; // Payload to be sent to cloud
 
-      if (listName !== "")
-        payload.listName = listName;
+  let bodyHasListNameField = false;
+  let bodyHasMoviesField = false;
   
-    } catch(err: any) {
-      return NextResponse.json({ message: err.message }, {
-        status: 400,
-        headers: {"Content-Type": "application/json"},
-      });
-    }
+  // Validate name before adding to payload
+  if (body.hasOwnProperty("listName")) {
+    let listName = body.listName;
+
+    listName = listName.trim();
+    listName = sanitizeString(listName);
+    verifyListName(listName);
+
+    payload.listName = listName;
+    bodyHasListNameField = true;
   }
 
-  if (movies && !Array.isArray(movies)) {
-    return NextResponse.json({ message: "Invalid movies field" }, {
-      status: 400,
-      headers: {"Content-Type": "application/json"},
-    });
+  // Validate movies array before adding to payload
+  if (body.hasOwnProperty("movies")) {
+    if (!Array.isArray(body.movies))
+      throw new AppError("Movies is not an array", 400);
+
+    payload.movies = body.movies;
+    bodyHasMoviesField = true;
   }
 
-  if (movies) payload.movies = movies;
-
-  // Make sure list ID is a valid uuid v4
+  if (!bodyHasListNameField && !bodyHasMoviesField)
+    throw new AppError("Invalid body", 400);
+  
+  // Validate list ID
   if (!listId || !validator.isUUID(listId, 4))
-    return NextResponse.json({ message: "Invalid id" }, {
-      status: 400,
-      headers: {
-        "Content-Type": "application/json"
-      },
-    });
+    throw new AppError("Invalid list id", 400);
 
   // Patch list in DB
   const { getToken } = await auth();
@@ -131,7 +111,7 @@ export async function PATCH(
   });
 }
 
-export async function DELETE(
+async function handleDELETE(
   request: NextRequest,
   { params }: { params: Promise<{ listId: string }> }
 ) {
@@ -141,12 +121,7 @@ export async function DELETE(
 
   // Make sure list ID is a valid uuid v4
   if (!listId || !validator.isUUID(listId, 4))
-    return NextResponse.json({ message: "Invalid id" }, {
-      status: 400,
-      headers: {
-        "Content-Type": "application/json"
-      },
-    });
+    throw new AppError("Invalid list id", 400);
 
   // Delete list from DB
   const res = await axiosServerInstance({
@@ -164,3 +139,7 @@ export async function DELETE(
     },
   });
 }
+
+export const GET = errorWrapper(handleGET);
+export const PATCH = errorWrapper(handlePATCH);
+export const DELETE = errorWrapper(handleDELETE);

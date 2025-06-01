@@ -19,7 +19,7 @@ import {
 import {
   getDeleteDialogTemplate,
   getRenameDialogTemplate
-} from "@/utils";
+} from "@/utils/dialog-templates";
 import { redirect } from "next/navigation";
 
 const MyMovies = ({ listId }: MoviesProps) => {

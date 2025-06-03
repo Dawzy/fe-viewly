@@ -1,8 +1,9 @@
 "use server";
 
-import { axiosServerInstance } from "@/axios";
+import { axiosAWSInstance } from "@/axios";
 import { List } from "@/types";
 import { sanitizeString, verifyListName } from "@/utils";
+import { fetchLists } from "@/utils/common-server-actions";
 import { errorWrapper } from "@/utils/api-wrapper";
 import { auth } from "@clerk/nextjs/server";
 import { NextRequest, NextResponse } from "next/server";
@@ -40,19 +41,7 @@ let mockLists: List[] = [
 ];
 
 async function handleGET(_request: NextRequest) {
-  // Get token
-  const { getToken } = await auth();
-  const token = await getToken();
-
-  // Get user's list
-  const { data: lists } = await axiosServerInstance({
-    method: "get",
-    url: process.env.AWS_API_GATEWAY_URL,
-    headers: {
-      "Authorization": `Bearer ${token}`,
-      "Content-Type": "application/json"
-    }
-  });
+  const lists = await fetchLists();
 
   return NextResponse.json(lists, {
     status: 200,
@@ -75,7 +64,7 @@ export async function handlePOST(request: NextRequest) {
   const { getToken } = await auth();
   const token = await getToken();
 
-  const { data } = await axiosServerInstance({
+  const { data } = await axiosAWSInstance({
     method: "post",
     url: process.env.AWS_API_GATEWAY_URL,
     headers: {

@@ -8,7 +8,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { PageHeaderProps } from "@/types";
-import Spinner from "./spinner";
+import { Spinner } from "@/components";
 
 const PageHeader = ({ title, options, onAdd, pendingChange }: PageHeaderProps) => {
   return (

@@ -1,6 +1,6 @@
 import { ListCardProps } from "@/types";
 import { Ellipsis } from "lucide-react";
-import { Button } from "./ui/button";
+import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useInputDialog } from "@/contexts/input-dialog-context";
 import {
@@ -8,8 +8,11 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger
-} from "./ui/dropdown-menu";
-import { getDeleteDialogTemplate, getRenameDialogTemplate } from "@/utils/dialog-templates";
+} from "@/components/ui/dropdown-menu";
+import {
+  getDeleteDialogTemplate,
+  getRenameDialogTemplate
+} from "@/utils/dialog-templates";
 
 const ListCard = ({ list, onRename, onDelete }: ListCardProps) => {
   const { showDialog } = useInputDialog();

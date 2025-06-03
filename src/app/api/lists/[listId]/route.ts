@@ -1,49 +1,35 @@
 "use server";
 
-import { axiosServerInstance } from "@/axios";
+import { axiosAWSInstance } from "@/axios";
 import { sanitizeString, verifyListName } from "@/utils";
+import { fetchListById } from "@/utils/common-server-actions";
 import { errorWrapper } from "@/utils/api-wrapper";
 import { auth } from "@clerk/nextjs/server";
 import { NextRequest, NextResponse } from "next/server";
 import validator from "validator";
+
+const mockList = {
+  listId: "4",
+  listName: "Sci-Fi Classics",
+  movies: [
+    { id: "1", name: "Inception" },
+    { id: "2", name: "The Matrix" },
+    { id: "3", name: "Interstellar" },
+    { id: "4", name: "Blade Runner" },
+    { id: "5", name: "The Prestige" }
+  ],
+  createdAt: new Date("2024-04-25").toISOString(),
+  updatedAt: new Date("2024-04-25").toISOString()
+}
 
 async function handleGET(
   _request: NextRequest,
   { params }: { params: Promise<{ listId: string }> }
 ) {
   const { listId } = await params;
+  const list = await fetchListById(listId);
 
-  // Make sure list ID is a valid uuid v4
-  if (!listId || !validator.isUUID(listId, 4))
-    throw new AppError("Invalid list id", 400);
-
-  // Get list data from DB
-  // const { getToken } = await auth();
-  // const token = await getToken();
-  // const { data: list } = await axiosServerInstance({
-  //   method: "get",
-  //   url: `${process.env.AWS_API_GATEWAY_URL}/${listId}`,
-  //   headers: {
-  //     Authorization: `Bearer ${token}`
-  //   }
-  // });
-
-  // TO DO: GET ALL MOVIES DATA FROM TMDB
-  const mockList = {
-    listId: "4",
-    listName: "Sci-Fi Classics",
-    movies: [
-      { id: "1", name: "Inception" },
-      { id: "2", name: "The Matrix" },
-      { id: "3", name: "Interstellar" },
-      { id: "4", name: "Blade Runner" },
-      { id: "5", name: "The Prestige" }
-    ],
-    createdAt: new Date("2024-04-25").toISOString(),
-    updatedAt: new Date("2024-04-25").toISOString()
-  }
-
-  return NextResponse.json(mockList, {
+  return NextResponse.json(list, {
     status: 200,
     headers: {
       "Content-Type": "application/json"
@@ -93,7 +79,7 @@ async function handlePATCH(
   // Patch list in DB
   const { getToken } = await auth();
   const token = await getToken();
-  const res = await axiosServerInstance({
+  const res = await axiosAWSInstance({
     method: "patch",
     url: `${process.env.AWS_API_GATEWAY_URL}/${listId}`,
     headers: {
@@ -124,7 +110,7 @@ async function handleDELETE(
     throw new AppError("Invalid list id", 400);
 
   // Delete list from DB
-  const res = await axiosServerInstance({
+  const res = await axiosAWSInstance({
     method: "delete",
     url: `${process.env.AWS_API_GATEWAY_URL}/${listId}`,
     headers: {

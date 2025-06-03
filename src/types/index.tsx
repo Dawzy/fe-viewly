@@ -1,3 +1,69 @@
+type TMDBGenre = {
+  id: number;
+  name: string;
+}
+type TMDBProductionCompany = {
+  id: number;
+  logo_path: string | null;
+  name: string;
+  origin_country: string;
+}
+type TMDBProductionCountry = {
+  iso_3166_1: string;
+  name: string;
+}
+type TMDBSpokenLanguage = {
+  english_name: string;
+  iso_639_1: string;
+  name: string;
+}
+
+export type TMDBMovieDetailsMin = {
+  adult: boolean;
+  backdrop_path: string;
+  genre_ids: number[];
+  id: number;
+  original_language: string;
+  original_title: string;
+  overview: string;
+  popularity: number;
+  poster_path: string;
+  release_date: string;
+  title: string;
+  video: boolean;
+  vote_average: number;
+  vote_count: number;
+}
+
+export type TMDBMovieDetails = {
+  adult: boolean;
+  backdrop_path: string;
+  belongs_to_collection: object | null;
+  budget: number;
+  genres: TMDBGenre[];
+  homepage: string;
+  id: number;
+  imdb_id: string;
+  origin_country: string[];
+  original_language: string;
+  original_title: string;
+  overview: string;
+  popularity: number;
+  poster_path: string;
+  production_companies: TMDBProductionCompany[];
+  production_countries: TMDBProductionCountry[];
+  release_date: string;
+  revenue: number;
+  runtime: number;
+  spoken_languages: TMDBSpokenLanguage[];
+  status: string;
+  tagline: string;
+  title: string;
+  video: boolean;
+  vote_average: number;
+  vote_count: number;
+}
+
 export type Movie = {
   id: string;
   name: string;
@@ -64,7 +130,28 @@ export interface MovieCardProps {
   showLoading?: boolean;
 }
 
+export interface MovieBannerProps {
+  movie: TMDBMovieDetailsMin;
+}
+
+export interface MovieBannerCarouselProps {
+  title: string;
+  category: string;
+  page: number;
+}
+
 export interface IMovieActionPayload {
   listId: List["listId"];
   movies: Movie[];
 };
+
+export interface IMoviesPayload {
+  category: string;
+  page: number;
+}
+
+export interface IMoviesResponse {
+  results: TMDBMovieDetailsMin[];
+  page: number;
+  total_pages: number;
+}

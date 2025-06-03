@@ -1,10 +1,10 @@
 import { MovieCardProps } from "@/types";
 import { getMockData } from "@/utils";
 import Image from "next/image";
-import { Button } from "./ui/button";
+import { Button } from "@/components/ui/button";
 import { Trash } from "lucide-react";
 import { useConfirmDialog } from "@/contexts/confirm-dialog-context";
-import Spinner from "./spinner";
+import { Spinner } from "@/components";
 
 const MovieCard = ({
   movie,

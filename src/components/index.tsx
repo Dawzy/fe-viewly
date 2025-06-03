@@ -9,6 +9,8 @@ import Spinner from "./spinner";
 import LoadingListCard from "./loading-list-card";
 import NextThemeProvider from "./next-theme-provider";
 import DialogProviders from "./dialog-providers";
+import MovieBanner from "./movie-banner";
+import MovieBannerCarousel from "./movie-banner-carousel";
 
 export {
   Navbar,
@@ -21,5 +23,7 @@ export {
   MovieCard,
   Spinner,
   NextThemeProvider,
-  DialogProviders
+  DialogProviders,
+  MovieBanner,
+  MovieBannerCarousel
 }

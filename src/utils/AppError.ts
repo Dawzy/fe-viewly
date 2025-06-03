@@ -9,3 +9,5 @@ class AppError extends Error {
     Object.setPrototypeOf(this, AppError.prototype);
   }
 }
+
+export default AppError;

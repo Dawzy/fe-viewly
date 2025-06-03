@@ -1,9 +1,25 @@
 import { axiosClientInstance } from "@/axios";
-import { IMovieActionPayload, List } from "@/types";
+import {
+  IMovieActionPayload,
+  IMoviesPayload,
+  IMoviesResponse,
+  List
+} from "@/types";
 
 // URLS
 const LISTS_URL = "/lists";
 const BROWSE_URL = "/browse";
+
+export const getMovies = async (
+    payload: IMoviesPayload
+): Promise<IMoviesResponse> => {
+  const { data } = await axiosClientInstance({
+    method: "get",
+    url: `${BROWSE_URL}/${payload.category}/${payload.page}`
+  });
+
+  return data;
+}
 
 export const getLists = async (): Promise<List[]> => {
   const { data } = await axiosClientInstance({

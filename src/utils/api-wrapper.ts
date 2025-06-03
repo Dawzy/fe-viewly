@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import axios from "axios";
+import AppError from "@/utils/AppError";
 
 type RouteHandler = (
   request: NextRequest,

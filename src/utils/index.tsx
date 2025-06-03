@@ -1,3 +1,4 @@
+import AppError from "./AppError";
 import img1 from "/public/image 1.png"
 import img2 from "/public/image 2.png"
 import img3 from "/public/image 3.png"

@@ -1,7 +1,8 @@
-import axiosClientInstance from "./axios-instance-client";
-import axiosServerInstance from "./axios-instance-server";
+import axiosClientInstance from "./axios-client-instances";
+import { axiosAWSInstance, axiosTMDBInstance } from "./axios-server-instances";
 
 export {
   axiosClientInstance,
-  axiosServerInstance
+  axiosAWSInstance,
+  axiosTMDBInstance
 }

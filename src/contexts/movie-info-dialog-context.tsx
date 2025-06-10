@@ -129,6 +129,8 @@ export const MovieInfoDialogProvider = ({
                   fill
                   className="object-cover"
                   priority
+                  width={473}
+                  height={709}
                 />
                 {vote_average && (
                   <div className="absolute bottom-2 left-2 flex items-center gap-1 bg-black/70 text-amber-500 px-2 py-1 rounded-md">

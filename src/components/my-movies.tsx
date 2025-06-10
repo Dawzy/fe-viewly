@@ -21,6 +21,7 @@ import {
   getRenameDialogTemplate
 } from "@/utils/dialog-templates";
 import { redirect } from "next/navigation";
+import { formatTime } from "@/utils";
 
 const MyMovies = ({ listId }: MoviesProps) => {
   const { showDialog } = useInputDialog();
@@ -29,6 +30,8 @@ const MyMovies = ({ listId }: MoviesProps) => {
     isLoading,
     isError
   } = useQuery( listQueryOptions(listId) );
+
+  const totalWatchTime = list?.movies.reduce((total, movie) => total + movie.runtime, 0) || 0;
 
   const {
     mutate: renameList,
@@ -88,7 +91,7 @@ const MyMovies = ({ listId }: MoviesProps) => {
     <>
       {/* Page Header */}
       <PageHeader
-        title={renameVars ? renameVars.listName : list.listName}
+        title={`${renameVars ? renameVars.listName : list.listName} | ${ formatTime(totalWatchTime) }`}
         pendingChange={pendingListRename}
         options={[
           { optionName: "Add Movie", onClick: onAdd, isDestructive: false },

@@ -10,7 +10,6 @@ import {
   IRemoveMovieActionPayload,
   List,
 } from "@/types";
-import toast from "react-hot-toast";
 
 // URLS
 const LISTS_URL = "/lists";
@@ -92,7 +91,6 @@ export const addMovie = async (
 export const removeMovie = async (
   payload: IRemoveMovieActionPayload
 ): Promise<void> => {
-  console.log(payload);
   await axiosClientInstance({
     method: "delete",
     url: `${LISTS_URL}/${payload.listId}/${payload.movieId}`,

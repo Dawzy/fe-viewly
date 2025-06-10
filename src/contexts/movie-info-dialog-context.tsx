@@ -8,7 +8,7 @@ import {
   useRef,
   useState
 } from "react";
-import { formatTime } from "@/utils";
+import { formatTime, ratingToColor } from "@/utils";
 import Image from "next/image";
 
 import { Clock } from "lucide-react";
@@ -74,14 +74,15 @@ export const MovieInfoDialogProvider = ({
     runtime,
     vote_average,
     poster_path,
-    onConfirm
+    onConfirm,
+    isRemove
   } = dialogProps;
 
   const {
     data: lists,
     isLoading: isLoadingList,
     isError: isErrorList
-  } = useQuery( listsQueryOptions() );
+  } = useQuery( listsQueryOptions(!isRemove) ); // Only fetch lists when we want to add a movie to them
 
   const showDialog = useCallback((props: MovieInfoDialogProps) => {
     setDialogProps(props);
@@ -103,8 +104,8 @@ export const MovieInfoDialogProvider = ({
     setOpenLists(false);
   };
 
-  const onClick = async (selectedList: List) => {
-    onConfirm(selectedList.listId);
+  const onClick = async (list: List | undefined) => {
+    onConfirm(list?.listId);
     closeDialog();
   }
 
@@ -129,15 +130,31 @@ export const MovieInfoDialogProvider = ({
                   fill
                   className="object-cover"
                   priority
-                  width={473}
-                  height={709}
                 />
                 {vote_average && (
-                  <div className="absolute bottom-2 left-2 flex items-center gap-1 bg-black/70 text-amber-500 px-2 py-1 rounded-md">
-                    <span className="text-sm font-medium">{ (vote_average * 10).toFixed(0)}%</span>
+                  <div className={`absolute bottom-2 left-2 flex items-center gap-1 px-2 py-1 rounded-full bg-black/50`}>
+                    <span
+                      className="text-sm font-medium text-[var(--rating-color)]"
+                      style={{"--rating-color": ratingToColor(vote_average / 10)} as React.CSSProperties}
+                    >
+                      { (vote_average * 10).toFixed(0) }%
+                    </span>
                   </div>
                 )}
               </div>
+
+              {genres && genres.length > 0 && (
+                <div className="max-w-48">
+                  <h3 className="font-semibold mb-2">Genres</h3>
+                  <div className="flex flex-wrap gap-2">
+                    {genres.map((genre) => (
+                      <span key={genre.id} className="px-2 py-1 bg-muted text-muted-foreground rounded-md text-sm">
+                        {genre.name}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Movie Details */}
@@ -155,19 +172,6 @@ export const MovieInfoDialogProvider = ({
                 <h3 className="font-semibold mb-2">Overview</h3>
                 <p className="text-muted-foreground leading-relaxed">{overview}</p>
               </div>
-
-              {genres && genres.length > 0 && (
-                <div>
-                  <h3 className="font-semibold mb-2">Genres</h3>
-                  <div className="flex flex-wrap gap-2">
-                    {genres.map((genre) => (
-                      <span key={genre.id} className="px-2 py-1 bg-muted text-muted-foreground rounded-md text-sm">
-                        {genre.name}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              )}
             </div>
           </div>
       
@@ -176,43 +180,49 @@ export const MovieInfoDialogProvider = ({
             <Button type="button" variant="outline" className="w-1/3" onClick={closeDialog}>
               Close
             </Button>
-
-            <Popover open={openLists} onOpenChange={setOpenLists}>
-              <PopoverTrigger asChild>
-                <Button role="combobox" variant="default" className="w-1/3" aria-expanded={openLists}>
+            
+            {isRemove ?
+              <Button variant="destructive" className="w-1/3" onClick={() => onClick(undefined)}>
+                Remove
+              </Button>
+            :
+              <Popover open={openLists} onOpenChange={setOpenLists}>
+                <PopoverTrigger asChild>
+                  <Button role="combobox" variant="default" className="w-1/3" aria-expanded={openLists}>
                     Add To List
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-[200px] p-0">
-                <Command>
-                  {isLoadingList ? 
-                    <div className="flex justify-center items-center py-5">
-                      <Spinner />
-                    </div>
-                  :
-                    <>
-                      <CommandInput placeholder="Search lists..." className="h-9" />
-                      <CommandList>
-                        <CommandEmpty>{isErrorList ? "An error occured, please try again later." : "No lists found."}</CommandEmpty>
-                        <CommandGroup>
-                          {!isErrorList &&
-                            lists?.map(list => (
-                              <CommandItem
-                              key={list.listId}
-                              value={list.listId}
-                              onSelect={() => onClick(list)}
-                              >
-                                {list.listName}
-                              </CommandItem>
-                            ))
-                          }
-                        </CommandGroup>
-                      </CommandList>
-                    </>
-                  }
-                </Command>
-              </PopoverContent>
-            </Popover>
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-[200px] p-0">
+                  <Command>
+                    {isLoadingList ? 
+                      <div className="flex justify-center items-center py-5">
+                        <Spinner />
+                      </div>
+                    :
+                      <>
+                        <CommandInput placeholder="Search lists..." className="h-9" />
+                        <CommandList>
+                          <CommandEmpty>{isErrorList ? "An error occured, please try again later." : "No lists found."}</CommandEmpty>
+                          <CommandGroup>
+                            {!isErrorList &&
+                              lists?.map(list => (
+                                <CommandItem
+                                key={list.listId}
+                                value={list.listId}
+                                onSelect={() => onClick(list)}
+                                >
+                                  {list.listName}
+                                </CommandItem>
+                              ))
+                            }
+                          </CommandGroup>
+                        </CommandList>
+                      </>
+                    }
+                  </Command>
+                </PopoverContent>
+              </Popover>
+            }
           </DialogFooter>
         </DialogContent>
       </Dialog>

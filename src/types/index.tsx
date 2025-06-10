@@ -71,7 +71,7 @@ export type Movie = {
   movieId: TMDBMovieDetailsMin["id"];
   title: string;
   vote_average: number;
-  genre_ids: number[];
+  genres: number[];
   overview: string;
   poster_path: string;
   runtime: number;
@@ -115,6 +115,7 @@ export type MovieInfoDialogProps = {
   vote_average: TMDBMovieDetails["vote_average"];
   genres: TMDBMovieDetails["genres"];
   onConfirm: (...args: any[]) => void;
+  isRemove?: boolean;
 }
 
 export interface IPageHeaderOption {

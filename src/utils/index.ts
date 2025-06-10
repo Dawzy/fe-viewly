@@ -30,3 +30,24 @@ export const formatTime = (minutes: number) => {
   const m = minutes % 60;
   return h > 0 ? `${h}h ${m}m` : `${m}m`;
 }
+
+export const ratingToColor = (rating: number) => {
+  rating = Math.max(0, Math.min(1, rating));
+  
+  let r, g;
+  
+  if (rating < 0.6) {
+    // Red to yellow
+    const t = rating / 0.6;
+    r = 255;
+    g = Math.round(255 * t);
+  } else {
+    // Yellow to green
+    const t = (rating - 0.6) / 0.4;
+    r = Math.round(255 * (1 - t));
+    g = 255;
+  }
+  
+  const toHex = (n: number) => n.toString(16).padStart(2, '0');
+  return `#${toHex(r)}${toHex(g)}00`;
+}

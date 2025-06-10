@@ -9,12 +9,13 @@ import {
 } from "./actions";
 import { BROWSE_QUERY_KEY, LISTS_QUERY_KEY } from "@/constants";
 
-export const listsQueryOptions = () => {
+export const listsQueryOptions = (enabled=true) => {
   return queryOptions({
     queryKey: [LISTS_QUERY_KEY],
     queryFn: () => getLists(),
     retryDelay: failureCount => failureCount * 1000,
     staleTime: Infinity,
+    enabled,
   });
 }
 

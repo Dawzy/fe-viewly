@@ -13,7 +13,6 @@ import {
   PageHeader,
   Spinner
 } from "@/components";
-import { List } from "@/types";
 import { useInputDialog } from "@/contexts/input-dialog-context";
 import { getNewListDialogTemplate } from "@/utils/dialog-templates";
 
@@ -47,7 +46,7 @@ const MyLists = () => {
   const triggerNewListModal = () =>
     showDialog(
       getNewListDialogTemplate(
-        (listName: List["listName"]) => createNewList({ listName })
+        (listName: string) => createNewList({ listName })
       )
     );
   
@@ -56,8 +55,8 @@ const MyLists = () => {
       <Spinner />
     </div>
   );
-  
-  if (isError || !data) return (
+
+  if (isError || !data || !Array.isArray(data)) return (
     <div className="page w-full px-8 py-4 gap-4 flex-wrap justify-center items-center h-auto text-2xl">
       <p>Error loading lists, please try again later.</p>
     </div>
@@ -84,7 +83,7 @@ const MyLists = () => {
               <ListCard
                 key={list.listId}
                 list={list}
-                onRename={(listName: List["listName"]) => renameList({ listName, listId: list.listId })}
+                onRename={(listName: string) => renameList({ listName, listId: list.listId })}
                 onDelete={() => deleteList({ listId: list.listId })}
               />
             );

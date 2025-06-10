@@ -10,7 +10,7 @@ export const axiosAWSInstance = axios.create({
 });
 
 export const axiosTMDBInstance = axios.create({
-  baseURL: "https://api.themoviedb.org/4",
+  baseURL: "https://api.themoviedb.org/3",
   timeout: 1000 * 30, // 30 seconds
   headers: {
     "Content-Type": "application/json",

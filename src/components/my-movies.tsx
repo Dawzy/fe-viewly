@@ -3,7 +3,7 @@
 import { useInputDialog } from "@/contexts/input-dialog-context";
 import { Button } from "@/components/ui/button"
 import { Plus } from "lucide-react"
-import { List, MoviesProps } from "@/types";
+import { MoviesProps } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 import { listQueryOptions } from "@/query-api/query-options";
 import {
@@ -14,7 +14,7 @@ import {
 import {
   useRenameListMutation,
   useDeleteListMutation,
-  usePatchMovieMutation,
+  useRemoveMovieMutation,
 } from "@/query-api/mutations";
 import {
   getDeleteDialogTemplate,
@@ -41,10 +41,10 @@ const MyMovies = ({ listId }: MoviesProps) => {
   } = useDeleteListMutation();
 
   const {
-    mutate: deleteMovie,
+    mutate: removeMovie,
     isPending: pendingMovieDelete,
     variables: movieVars
-  } = usePatchMovieMutation();
+  } = useRemoveMovieMutation();
 
   const onAdd = () => redirect("/browse");
 
@@ -52,7 +52,7 @@ const MyMovies = ({ listId }: MoviesProps) => {
     if (!list) return;
     showDialog(
       getRenameDialogTemplate(
-        (listName: List["listName"]) => renameList({ listName, listId: list.listId }),
+        (listName: string) => renameList({ listName, listId: list.listId }),
         list.listName
       )
     );
@@ -102,13 +102,13 @@ const MyMovies = ({ listId }: MoviesProps) => {
         <div className="grid gap-4 grid-cols-[repeat(auto-fit,minmax(130px,1fr))] max-w-6xl w-full px-4">
           {list.movies.map(movie =>
             <MovieCard
-              key={movie.id}
+              key={movie.movieId}
               movie={movie}
-              onDelete={() => deleteMovie({ listId: list.listId, movies: list.movies.filter(m => m.id === movie.id) })}
+              onDelete={() => removeMovie({ listId: list.listId, movieId: movie.movieId })}
               showLoading={
                 pendingMovieDelete &&
-                movieVars?.listId !== undefined &&
-                movie.id === movieVars.listId
+                movieVars !== undefined &&
+                movieVars.movieId === movie.movieId
               }
             />
           )}

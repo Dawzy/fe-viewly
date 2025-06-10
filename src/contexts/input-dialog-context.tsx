@@ -25,7 +25,7 @@ import {
 import { sanitizeString } from "@/utils";
 
 const DEFAULT_VALUE: InputDialogProps = {
-  onConfirm: (_: List["listName"]) => {},
+  onConfirm: (_: string) => {},
   title: "",
   desc: "",
   label: "",

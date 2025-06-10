@@ -16,16 +16,17 @@ export function errorWrapper(handler: RouteHandler): RouteHandler {
       let status = 500;
 
       if (axios.isAxiosError(error)) {
-        console.log(error);
-        message = "DB Error";
+        const{ message: msg, status: statusCode } = error.response?.data;
+        message = msg;
+        status = statusCode ?? status;
       }
 
       if (error instanceof AppError) {
-        console.error(error.message);
         message = error.message;
         status = error.statusCode;
       }
 
+      console.error(message);
       return NextResponse.json(
         { message }, { status }
       );

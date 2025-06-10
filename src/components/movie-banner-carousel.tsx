@@ -44,25 +44,25 @@ const MovieBannerCarousel = ({ title, category, page }: MovieBannerCarouselProps
           </div>
         }
       </div>
-      <Carousel className="w-full h-[225px] bg-on-surface rounded-2xl" setApi={setCarouselAPI}>
+      <Carousel className="w-full bg-on-surface rounded-2xl" setApi={setCarouselAPI}>
         {(isError || !data) ?
-        <div className="flex justify-center items-center w-full h-[200px]">
-          <p>Error loading the {category} category, please try again later.</p>
-        </div>
-        :  
-        <CarouselContent className="-ml-0 w-full h-full py-3 rounded-2xl">
-          {isLoading ?
-          <div className="flex justify-center items-center w-full h-[200px]">
-            <Spinner />
+          <div className="flex justify-center items-center w-full h-full">
+            <p>Error loading the {category} category, please try again later.</p>
           </div>
-          :
-          data.results.map( (movie, index) => (
-            <CarouselItem key={index} className="pl-9 md:basis-1/2 lg:basis-1/3 w-full h-full">
-              <MovieBanner movie={movie} />
-            </CarouselItem>
-          ))
-          }
-        </CarouselContent>
+        :  
+          <CarouselContent className="-ml-2 w-full h-full py-3 rounded-2xl">
+            {isLoading ?
+              <div className="flex justify-center items-center w-full h-[200px]">
+                <Spinner />
+              </div>
+            :
+              data.results.map( (movie, index) => (
+                <CarouselItem key={index} className="pl-2 md:pl-4 basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/4 xl:basis-1/5">
+                  <MovieBanner movie={movie} />
+                </CarouselItem>
+              ))
+            }
+          </CarouselContent>
         }
       </Carousel>
     </>

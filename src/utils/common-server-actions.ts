@@ -1,9 +1,11 @@
 "use server";
 
-import { axiosAWSInstance } from "@/axios";
-import { IMoviesPayload, List } from "@/types";
+import { axiosAWSInstance, axiosTMDBInstance } from "@/axios";
+import { IMoviesPayload, IMoviesResponse } from "@/types";
 import { auth } from "@clerk/nextjs/server";
-import validator from "validator";
+import AppError from "./AppError";
+import { getGenreIdByName, validateListId } from "@/utils";
+import { GENRE_EXCLUSIONS } from "@/constants";
 
 export const fetchLists = async () => {
   // Get token
@@ -16,17 +18,14 @@ export const fetchLists = async () => {
     url: process.env.AWS_API_GATEWAY_URL,
     headers: {
       "Authorization": `Bearer ${token}`,
-      "Content-Type": "application/json"
     }
   });
 
   return lists;
 }
 
-export const fetchListById = async (listId: List["listId"]) => {
-  // Make sure list ID is a valid uuid v4
-  if (!listId || !validator.isUUID(listId, 4))
-    throw new AppError("Invalid list id", 400);
+export const fetchListById = async (listId: string) => {
+  validateListId(listId);
 
   // Get list data from DB
   const { getToken } = await auth();
@@ -42,329 +41,25 @@ export const fetchListById = async (listId: List["listId"]) => {
   return list;
 }
 
-export const fetchMoviesByCategory = async ({category, page}: IMoviesPayload) => {
-  return { results: mockMovies };
-}
+export const fetchMoviesByCategory = async (
+  {category, page}: IMoviesPayload
+): Promise<IMoviesResponse> => {
+  if (!["trending", "action", "comedy", "horror", "thriller"].includes( category ))
+    throw new AppError("Invalid category", 400);
+  
+  // Construct API path
+  let apiPath = "/trending/movie/week";
+  if (category !== "trending") {
+    const genreId = getGenreIdByName(category) ?? 0;
+    const exclusions = GENRE_EXCLUSIONS.find(genre => genre.id === genreId)?.exclusions.join("%2C");
+    apiPath = `/discover/movie?include_adult=false&include_video=false&language=en-US&page=${page}&sort_by=popularity.desc&with_genres=${genreId}&without_genres=${exclusions}`
+  }
 
-const mockMovies = [
-  {
-    adult: false,
-    backdrop_path: "",
-    genre_ids: [],
-    id: 1,
-    original_language: "",
-    original_title: "Movie 1",
-    overview: "",
-    popularity: 0,
-    poster_path: "",
-    release_date: "",
-    title: "Movie 1",
-    video: false,
-    vote_average: 0,
-    vote_count: 0,
-  },
-  {
-    adult: false,
-    backdrop_path: "",
-    genre_ids: [],
-    id: 2,
-    original_language: "",
-    original_title: "Movie 2",
-    overview: "",
-    popularity: 0,
-    poster_path: "",
-    release_date: "",
-    title: "Movie 2",
-    video: false,
-    vote_average: 0,
-    vote_count: 0,
-  },
-  {
-    adult: false,
-    backdrop_path: "",
-    genre_ids: [],
-    id: 3,
-    original_language: "",
-    original_title: "Movie 3",
-    overview: "",
-    popularity: 0,
-    poster_path: "",
-    release_date: "",
-    title: "Movie 3",
-    video: false,
-    vote_average: 0,
-    vote_count: 0,
-  },
-  {
-    adult: false,
-    backdrop_path: "",
-    genre_ids: [],
-    id: 4,
-    original_language: "",
-    original_title: "Movie 4",
-    overview: "",
-    popularity: 0,
-    poster_path: "",
-    release_date: "",
-    title: "Movie 4",
-    video: false,
-    vote_average: 0,
-    vote_count: 0,
-  },
-  {
-    adult: false,
-    backdrop_path: "",
-    genre_ids: [],
-    id: 5,
-    original_language: "",
-    original_title: "Movie 5",
-    overview: "",
-    popularity: 0,
-    poster_path: "",
-    release_date: "",
-    title: "Movie 5",
-    video: false,
-    vote_average: 0,
-    vote_count: 0,
-  },
-  {
-    adult: false,
-    backdrop_path: "",
-    genre_ids: [],
-    id: 1,
-    original_language: "",
-    original_title: "Movie 1",
-    overview: "",
-    popularity: 0,
-    poster_path: "",
-    release_date: "",
-    title: "Movie 1",
-    video: false,
-    vote_average: 0,
-    vote_count: 0,
-  },
-  {
-    adult: false,
-    backdrop_path: "",
-    genre_ids: [],
-    id: 2,
-    original_language: "",
-    original_title: "Movie 2",
-    overview: "",
-    popularity: 0,
-    poster_path: "",
-    release_date: "",
-    title: "Movie 2",
-    video: false,
-    vote_average: 0,
-    vote_count: 0,
-  },
-  {
-    adult: false,
-    backdrop_path: "",
-    genre_ids: [],
-    id: 3,
-    original_language: "",
-    original_title: "Movie 3",
-    overview: "",
-    popularity: 0,
-    poster_path: "",
-    release_date: "",
-    title: "Movie 3",
-    video: false,
-    vote_average: 0,
-    vote_count: 0,
-  },
-  {
-    adult: false,
-    backdrop_path: "",
-    genre_ids: [],
-    id: 4,
-    original_language: "",
-    original_title: "Movie 4",
-    overview: "",
-    popularity: 0,
-    poster_path: "",
-    release_date: "",
-    title: "Movie 4",
-    video: false,
-    vote_average: 0,
-    vote_count: 0,
-  },
-  {
-    adult: false,
-    backdrop_path: "",
-    genre_ids: [],
-    id: 5,
-    original_language: "",
-    original_title: "Movie 5",
-    overview: "",
-    popularity: 0,
-    poster_path: "",
-    release_date: "",
-    title: "Movie 5",
-    video: false,
-    vote_average: 0,
-    vote_count: 0,
-  },
-  {
-    adult: false,
-    backdrop_path: "",
-    genre_ids: [],
-    id: 1,
-    original_language: "",
-    original_title: "Movie 1",
-    overview: "",
-    popularity: 0,
-    poster_path: "",
-    release_date: "",
-    title: "Movie 1",
-    video: false,
-    vote_average: 0,
-    vote_count: 0,
-  },
-  {
-    adult: false,
-    backdrop_path: "",
-    genre_ids: [],
-    id: 2,
-    original_language: "",
-    original_title: "Movie 2",
-    overview: "",
-    popularity: 0,
-    poster_path: "",
-    release_date: "",
-    title: "Movie 2",
-    video: false,
-    vote_average: 0,
-    vote_count: 0,
-  },
-  {
-    adult: false,
-    backdrop_path: "",
-    genre_ids: [],
-    id: 3,
-    original_language: "",
-    original_title: "Movie 3",
-    overview: "",
-    popularity: 0,
-    poster_path: "",
-    release_date: "",
-    title: "Movie 3",
-    video: false,
-    vote_average: 0,
-    vote_count: 0,
-  },
-  {
-    adult: false,
-    backdrop_path: "",
-    genre_ids: [],
-    id: 4,
-    original_language: "",
-    original_title: "Movie 4",
-    overview: "",
-    popularity: 0,
-    poster_path: "",
-    release_date: "",
-    title: "Movie 4",
-    video: false,
-    vote_average: 0,
-    vote_count: 0,
-  },
-  {
-    adult: false,
-    backdrop_path: "",
-    genre_ids: [],
-    id: 5,
-    original_language: "",
-    original_title: "Movie 5",
-    overview: "",
-    popularity: 0,
-    poster_path: "",
-    release_date: "",
-    title: "Movie 5",
-    video: false,
-    vote_average: 0,
-    vote_count: 0,
-  },
-  {
-    adult: false,
-    backdrop_path: "",
-    genre_ids: [],
-    id: 1,
-    original_language: "",
-    original_title: "Movie 1",
-    overview: "",
-    popularity: 0,
-    poster_path: "",
-    release_date: "",
-    title: "Movie 1",
-    video: false,
-    vote_average: 0,
-    vote_count: 0,
-  },
-  {
-    adult: false,
-    backdrop_path: "",
-    genre_ids: [],
-    id: 2,
-    original_language: "",
-    original_title: "Movie 2",
-    overview: "",
-    popularity: 0,
-    poster_path: "",
-    release_date: "",
-    title: "Movie 2",
-    video: false,
-    vote_average: 0,
-    vote_count: 0,
-  },
-  {
-    adult: false,
-    backdrop_path: "",
-    genre_ids: [],
-    id: 3,
-    original_language: "",
-    original_title: "Movie 3",
-    overview: "",
-    popularity: 0,
-    poster_path: "",
-    release_date: "",
-    title: "Movie 3",
-    video: false,
-    vote_average: 0,
-    vote_count: 0,
-  },
-  {
-    adult: false,
-    backdrop_path: "",
-    genre_ids: [],
-    id: 4,
-    original_language: "",
-    original_title: "Movie 4",
-    overview: "",
-    popularity: 0,
-    poster_path: "",
-    release_date: "",
-    title: "Movie 4",
-    video: false,
-    vote_average: 0,
-    vote_count: 0,
-  },
-  {
-    adult: false,
-    backdrop_path: "",
-    genre_ids: [],
-    id: 5,
-    original_language: "",
-    original_title: "Movie 5",
-    overview: "",
-    popularity: 0,
-    poster_path: "",
-    release_date: "",
-    title: "Movie 5",
-    video: false,
-    vote_average: 0,
-    vote_count: 0,
-  },
-];
+  // Consume API
+  const { data } = await axiosTMDBInstance({
+    method: "get",
+    url: apiPath,
+  });
+
+  return data;
+}

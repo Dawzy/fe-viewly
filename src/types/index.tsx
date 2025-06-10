@@ -1,17 +1,20 @@
-type TMDBGenre = {
+export type TMDBGenre = {
   id: number;
   name: string;
 }
+
 type TMDBProductionCompany = {
   id: number;
   logo_path: string | null;
   name: string;
   origin_country: string;
 }
+
 type TMDBProductionCountry = {
   iso_3166_1: string;
   name: string;
 }
+
 type TMDBSpokenLanguage = {
   english_name: string;
   iso_639_1: string;
@@ -65,8 +68,13 @@ export type TMDBMovieDetails = {
 }
 
 export type Movie = {
-  id: string;
-  name: string;
+  movieId: TMDBMovieDetailsMin["id"];
+  title: string;
+  vote_average: number;
+  genre_ids: number[];
+  overview: string;
+  poster_path: string;
+  runtime: number;
 }
 
 export type List = {
@@ -99,7 +107,15 @@ export type ConfirmDialogProps = {
   isDestructive?: boolean;
 }
 
-export type MovieInfoDialogProps = {}
+export type MovieInfoDialogProps = {
+  overview: TMDBMovieDetails["overview"];
+  poster_path: TMDBMovieDetails["poster_path"];
+  title: TMDBMovieDetails["title"];
+  runtime?: TMDBMovieDetails["runtime"];
+  vote_average: TMDBMovieDetails["vote_average"];
+  genres: TMDBMovieDetails["genres"];
+  onConfirm: (...args: any[]) => void;
+}
 
 export interface IPageHeaderOption {
   optionName: string;
@@ -140,6 +156,15 @@ export interface MovieBannerCarouselProps {
   page: number;
 }
 
+export interface IListRenamePayload {
+  listId: List["listId"];
+  listName: string;
+}
+
+export interface IListDeletePayload {
+  listId: List["listId"];
+}
+
 export interface IMovieActionPayload {
   listId: List["listId"];
   movies: Movie[];
@@ -154,4 +179,18 @@ export interface IMoviesResponse {
   results: TMDBMovieDetailsMin[];
   page: number;
   total_pages: number;
+}
+
+export interface IMoviePayload {
+  movieId: TMDBMovieDetailsMin["id"];
+}
+
+export interface IAddMovieActionPayload {
+  listId: List["listId"];
+  movieId: TMDBMovieDetailsMin["id"];
+}
+
+export interface IRemoveMovieActionPayload {
+  listId: List["listId"];
+  movieId: TMDBMovieDetailsMin["id"];
 }

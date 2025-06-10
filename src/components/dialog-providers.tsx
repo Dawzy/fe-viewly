@@ -10,7 +10,9 @@ const DialogProviders = ({
   return (
     <ConfirmDialogProvider>
       <InputDialogProvider>
-        {children}
+        <MovieInfoDialogProvider>
+          {children}
+        </MovieInfoDialogProvider>
       </InputDialogProvider>
     </ConfirmDialogProvider>
   )

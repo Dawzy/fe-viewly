@@ -1,10 +1,16 @@
+"use client";
+
 import { axiosClientInstance } from "@/axios";
 import {
-  IMovieActionPayload,
+  IAddMovieActionPayload,
+  IListDeletePayload,
+  IListRenamePayload,
   IMoviesPayload,
   IMoviesResponse,
-  List
+  IRemoveMovieActionPayload,
+  List,
 } from "@/types";
+import toast from "react-hot-toast";
 
 // URLS
 const LISTS_URL = "/lists";
@@ -54,7 +60,7 @@ export const newList = async (
 }
 
 export const deleteList = async (
-  payload: Pick<List, "listId">
+  payload: IListDeletePayload
 ): Promise<void> => {
   await axiosClientInstance({
     method: "delete",
@@ -63,23 +69,32 @@ export const deleteList = async (
 }
 
 export const renameList = async (
-  payload: Pick<List, "listId" | "listName">
+  payload: IListRenamePayload
 ): Promise<List> => {
   const { data } = await axiosClientInstance({
     method: "patch",
-    url:`${LISTS_URL}/${payload["listId"]}`,
-    data: payload
+    url:`${LISTS_URL}/${payload.listId}`,
+    data: { listName: payload.listName }
   });
 
   return data;
 }
 
-export const patchMovies = async (
-  payload: IMovieActionPayload
+export const addMovie = async (
+  payload: IAddMovieActionPayload
 ): Promise<void> => {
   await axiosClientInstance({
-    method: "patch",
-    url: `${LISTS_URL}/${payload["listId"]}}`,
-    data: { movies: payload.movies }
+    method: "post",
+    url: `${LISTS_URL}/${payload.listId}/${payload.movieId}`,
+  });
+}
+
+export const removeMovie = async (
+  payload: IRemoveMovieActionPayload
+): Promise<void> => {
+  console.log(payload);
+  await axiosClientInstance({
+    method: "delete",
+    url: `${LISTS_URL}/${payload.listId}/${payload.movieId}`,
   });
 }

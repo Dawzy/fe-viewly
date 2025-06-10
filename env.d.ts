@@ -8,5 +8,6 @@ namespace NodeJS {
     NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: string;
     NEXT_PUBLIC_CLERK_SIGN_IN_URL: string;
     NEXT_PUBLIC_CLERK_SIGN_UP_URL: string;
+    NEXT_PUBLIC_TMDB_IMAGES_HOST: string;
   }
 }

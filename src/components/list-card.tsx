@@ -13,6 +13,7 @@ import {
   getDeleteDialogTemplate,
   getRenameDialogTemplate
 } from "@/utils/dialog-templates";
+import { MAX_MOVIE_IN_LIST_COUNT } from "@/constants";
 
 const ListCard = ({ list, onRename, onDelete }: ListCardProps) => {
   const { showDialog } = useInputDialog();
@@ -56,7 +57,7 @@ const ListCard = ({ list, onRename, onDelete }: ListCardProps) => {
       <Link className="text-primary-text hover:text-accent transition-all text-center" href={`/lists/${list.listId}`} >
         <h2 className="w-44 text-xl font-semibold text-center">{list.listName}</h2>
         <p className="text-sm text-secondary-text mt-1">
-          {list.movies.length} {list.movies.length === 1 ? "movie" : "movies"}
+          {list.movies.length}/{MAX_MOVIE_IN_LIST_COUNT} movies
         </p>
       </Link>
     </div>

@@ -15,6 +15,8 @@ import {
 } from "@/components";
 import { useInputDialog } from "@/contexts/input-dialog-context";
 import { getNewListDialogTemplate } from "@/utils/dialog-templates";
+import { MAX_LIST_COUNT } from "@/constants";
+import toast from "react-hot-toast";
 
 const MyLists = () => {
   const { showDialog } = useInputDialog();
@@ -50,6 +52,8 @@ const MyLists = () => {
       )
     );
   
+  const displayListsFullToast = () => toast.error("Lists limit reached!");
+  
   if (isLoading) return (
     <div className="page w-full px-8 py-4 gap-4 flex-wrap justify-center items-center h-auto">
       <Spinner />
@@ -66,8 +70,8 @@ const MyLists = () => {
     <>
       {/* Page Header */}
       <PageHeader
-        title="My Lists"
-        onAdd={triggerNewListModal}
+        title={`My Lists (${data.length}/${MAX_LIST_COUNT})`}
+        onAdd={data.length < MAX_LIST_COUNT ? triggerNewListModal : displayListsFullToast}
       />
 
       {/* Page Content */}

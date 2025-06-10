@@ -33,6 +33,7 @@ import {
 import { Spinner } from "@/components";
 import { useQuery } from "@tanstack/react-query";
 import { listsQueryOptions } from "@/query-api/query-options";
+import { MAX_MOVIE_IN_LIST_COUNT } from "@/constants";
 
 const DEFAULT_VALUE: MovieInfoDialogProps = {
   onConfirm: () => {},
@@ -205,7 +206,7 @@ export const MovieInfoDialogProvider = ({
                           <CommandEmpty>{isErrorList ? "An error occured, please try again later." : "No lists found."}</CommandEmpty>
                           <CommandGroup>
                             {!isErrorList &&
-                              lists?.map(list => (
+                              lists?.map(list => (list.movies.length < MAX_MOVIE_IN_LIST_COUNT &&
                                 <CommandItem
                                 key={list.listId}
                                 value={list.listId}

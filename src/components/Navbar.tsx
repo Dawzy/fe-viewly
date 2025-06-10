@@ -42,8 +42,8 @@ const Navbar = () => {
   return (
     <nav className="text-primary-text text-3xl md:text-2xl">
       <div className="container mx-auto flex justify-between items-center">
-        <Link href="/" className="flex items-end">
-          <Image src="/Logo.svg" alt="" width={48} height={48}/>
+        <Link href="/browse" className="flex items-end">
+          <Image src="/Logo.svg" alt="Viewly" width={48} height={48}/>
         </Link>
 
         {/* Desktop Links */}

@@ -11,6 +11,7 @@ import NextThemeProvider from "./next-theme-provider";
 import DialogProviders from "./dialog-providers";
 import MovieBanner from "./movie-banner";
 import MovieBannerCarousel from "./movie-banner-carousel";
+import Footer from "./footer";
 
 export {
   Navbar,
@@ -25,5 +26,6 @@ export {
   NextThemeProvider,
   DialogProviders,
   MovieBanner,
-  MovieBannerCarousel
+  MovieBannerCarousel,
+  Footer
 }

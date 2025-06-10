@@ -1,7 +1,7 @@
 import "./globals.css";
 
 import type { Metadata } from "next";
-import { DialogProviders, Navbar } from "@/components";
+import { QueryProvider, DialogProviders, Navbar, Footer } from "@/components";
 import { Poppins } from "next/font/google";
 
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
@@ -10,7 +10,6 @@ import { Toaster } from "react-hot-toast";
 import { dark } from "@clerk/themes";
 import { NextThemeProvider } from "@/components";
 import { ClerkProvider } from "@clerk/nextjs";
-import { QueryProvider } from "@/components";
 
 export const metadata: Metadata = {
   title: "Viewly",
@@ -37,6 +36,7 @@ export default function RootLayout({
               <DialogProviders>
                 <Navbar />
                 {children}
+                <Footer />
               </DialogProviders>
               <ReactQueryDevtools initialIsOpen={false} />
             </QueryProvider>

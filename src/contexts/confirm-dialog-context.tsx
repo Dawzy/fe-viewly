@@ -44,7 +44,6 @@ export const ConfirmDialogProvider = ({
   children: React.ReactNode
 }) => {
   // State
-  const [value, setValue] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [dialogProps, setDialogProps] = useState<ConfirmDialogProps>(DEFAULT_VALUE);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -74,11 +73,10 @@ export const ConfirmDialogProvider = ({
 
   const closeDialog = () => {
     setIsOpen(false);
-    setValue("");
   };
 
   const onClick = () => {
-    onConfirm(value);
+    onConfirm();
     closeDialog();
   }
 

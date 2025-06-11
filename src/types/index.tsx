@@ -118,6 +118,10 @@ export type MovieInfoDialogProps = {
   isRemove?: boolean;
 }
 
+export type DisclaimerDialogProps = {
+  onConfirm: (...args: any[]) => void;
+}
+
 export interface IPageHeaderOption {
   optionName: string;
   onClick: () => void;

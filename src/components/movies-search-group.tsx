@@ -35,7 +35,7 @@ const MoviesSearchGroup = () => {
           type="button"
           onClick={handleSearch}
           variant="default"
-          className="absolute right-0 h-full rounded-l-none rounded-r-2xl !px-8 w-1/12"
+          className="absolute right-0 h-full rounded-l-none rounded-r-2xl !px-4 !sm:px-8 w-1/12"
         >
           <Search className= "h-8 w-8"/>
         </Button>
@@ -43,7 +43,7 @@ const MoviesSearchGroup = () => {
           type="search"
           placeholder="Search"
           value={value}
-          className="py-6 pr-18 w-lg rounded-2xl"
+          className="py-6 pr-18 w-xs sm:w-lg rounded-2xl"
           onChange={onTextEntered}
           onKeyDown={e => e.key === "Enter" && handleSearch()}
         />

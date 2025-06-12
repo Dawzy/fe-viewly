@@ -165,12 +165,12 @@ export const InputDialogProvider = ({
           </div>
 
           {/* Footer */}
-          <DialogFooter className="sm:justify-around">
-            <Button type="button" variant="outline" className="w-1/3" onClick={closeDialog}>
+          <DialogFooter className="w-full justify-center sm:justify-around">
+            <Button type="button" variant="outline" className="sm:w-1/3" onClick={closeDialog}>
               Cancel
             </Button>
             
-            <Button type="button" variant={isDestructive && "destructive" || "default"} className="w-1/3" onClick={isDestructive ? onDeleteClick : onClick}>
+            <Button type="button" variant={isDestructive && "destructive" || "default"} className="sm:w-1/3" onClick={isDestructive ? onDeleteClick : onClick}>
               {confirmButtonText ?? "Confirm"}
             </Button>
           </DialogFooter>

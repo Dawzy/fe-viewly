@@ -66,9 +66,6 @@ const MovieCard = ({
 
       <div className="rounded-2xl w-[122px] h-[162px] text-left flex items-center justify-center gap-2">
         <p className="text-nowrap">{title}</p>
-        {/* <Button disabled={showLoading} onClick={triggerConfirmDeleteDialog} className="text-destructive !p-0 hover:bg-transparent bg-transparent hover:text-primary-text">
-          <Trash className="!w-4 !h-4" />
-        </Button> */}
       </div>
     </div>
   )

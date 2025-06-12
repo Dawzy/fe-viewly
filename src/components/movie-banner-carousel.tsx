@@ -56,7 +56,7 @@ const MovieBannerCarousel = ({ title, queryOptions }: MovieBannerCarouselProps) 
               </div>
             :
               data?.results.map( (movie, index) => movie.backdrop_path && (
-                <CarouselItem key={index} className="pl-2 md:pl-4 basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/4 xl:basis-1/5">
+                <CarouselItem key={index} className="sm:pl-2 md:pl-4 basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/4 xl:basis-1/5">
                   <MovieBanner movie={movie} />
                 </CarouselItem>
               ))

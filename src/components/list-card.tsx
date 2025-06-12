@@ -36,7 +36,7 @@ const ListCard = ({ list, onRename, onDelete }: ListCardProps) => {
     );
 
   return (
-    <div className="relative flex flex-col items-center h-min p-6 bg-on-surface rounded-2xl max-w-52">
+    <div className="relative flex flex-col items-center h-min p-6 bg-on-surface rounded-2xl w-52">
       <DropdownMenu modal={false}>
         <DropdownMenuTrigger asChild>
           <Button className="absolute top-0 right-0 hover:bg-transparent bg-transparent text-primary-text hover:text-accent transition-all">

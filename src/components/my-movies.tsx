@@ -102,7 +102,7 @@ const MyMovies = ({ listId }: MoviesProps) => {
 
       {/* Page Content */}
       <div className="page w-full px-4 py-4 justify-center">
-        <div className="grid gap-4 grid-cols-[repeat(auto-fit,minmax(130px,1fr))] max-w-6xl w-full px-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-7 gap-4 max-w-full">
           {list.movies.map(movie =>
             <MovieCard
               key={movie.movieId}
@@ -117,7 +117,7 @@ const MyMovies = ({ listId }: MoviesProps) => {
           )}
 
           {/* Add movie button */}
-          <Button onClick={onAdd} className="flex justify-center items-center w-[122px] h-[162px] bg-on-surface rounded-2xl hover:bg-background">
+          <Button onClick={onAdd} className="flex justify-center items-center max-w-40 max-h-48 mx-auto w-[122px] h-[162px] bg-on-surface rounded-2xl hover:bg-background">
             <Plus className="text-primary !h-12 !w-12" />
           </Button>
         </div>

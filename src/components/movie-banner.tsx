@@ -8,6 +8,7 @@ import { getGenresFromIDs } from "@/utils";
 import Image from "next/image";
 import { useState } from "react";
 import Spinner from "./spinner";
+import toast from "react-hot-toast";
 
 const MovieBanner = ({ movie }: MovieBannerProps) => {
   const { showDialog } = useMovieInfoDialog();
@@ -16,15 +17,19 @@ const MovieBanner = ({ movie }: MovieBannerProps) => {
   const [imageLoaded, setImageLoaded] = useState(false);
 
   const {
-    mutate: addMovie,
+    mutateAsync: addMovie,
   } = useAddMovieMutation();
 
   // Add movie data to list using mutation
-  const onAdd = (listId: string) =>
-    addMovie({
-      listId,
-      movieId: id
-    });
+  const onAdd = (listId: string) => {
+    toast.promise(
+      async () => await addMovie({ listId, movieId: id }),
+      {
+        loading: "Adding movie",
+        success: "Movie added!",
+      }
+    );
+  }
 
   const onView = () =>
     showDialog({

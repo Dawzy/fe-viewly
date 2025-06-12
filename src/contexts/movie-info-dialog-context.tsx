@@ -194,13 +194,13 @@ export const MovieInfoDialogProvider = ({
                 Remove
               </Button>
             :
-              <Popover open={openLists} onOpenChange={setOpenLists}>
+              <Popover modal={true} open={openLists} onOpenChange={setOpenLists}>
                 <PopoverTrigger asChild>
                   <Button role="combobox" variant="default" className="w-1/3" aria-expanded={openLists}>
                     Add To List
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent className="w-[200px] p-0">
+                <PopoverContent className="w-[200px] p-0 z-50">
                   <Command>
                     {isLoadingList ? 
                       <div className="flex justify-center items-center py-5">

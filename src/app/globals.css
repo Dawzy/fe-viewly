@@ -4,37 +4,39 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --surface: #181818;
-  --on-surface: #242424;
-
-  --primary: #f1cf67;
-  --secondary: #5a4310;
-
-  --primary-text: #E0E0E0;
-  --secondary-text: #B0B0B0;
-  --border: #333333;
-
-  --toaster-background: #333333;
-  --toaster-foreground: #ffffff;
-
   --list-card-width: 150px;
   --list-item-card-width: 122px;
 
-  --radius: 0.625rem;
-  --background: #121212;
-  --foreground: var(--primary-text);
-  --card: #242424;
-  --card-foreground: var(--secondary-text);
-  --popover: #242424;
-  --popover-foreground: var(--secondary-text);
+  --surface: #eeeeee;
+  --on-surface: #cecece;
+
+  --primary: #b8860b;
   --primary-foreground: var(--primary-text);
+
+  --secondary: oklch(0.95 0 0);
   --secondary-foreground: var(--primary-text);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
+
+  --primary-text: #1a1a1a;
+  --secondary-text: #4a4a4a;
+
+  --toaster-background: #ffffff;
+  --toaster-foreground: #1a1a1a;
+
+  --radius: 0.625rem;
+  --background: #ffffff;
+  --foreground: var(--primary-text);
+  --card: #ffffff;
+  --card-foreground: var(--secondary-text);
+  --popover: #ffffff;
+  --popover-foreground: var(--secondary-text);
   --accent: var(--primary);
-  --accent-foreground: var(--primary-text);
-  --destructive: oklch(0.5 0.245 27.325);
-  --input: oklch(0.922 0 0);
+  --accent-foreground: #ffffff;
+  --destructive: oklch(0.6 0.245 27.325);
+
+  --muted: oklch(0.96 0 0);
+  --muted-foreground: oklch(0.45 0 0);
+  --border: #e5e5e5;
+  --input: oklch(0.98 0 0);
   
   --ring: oklch(0.708 0 0);
   --chart-1: oklch(0.646 0.222 41.116);
@@ -98,10 +100,17 @@
 }
 
 .dark {
+  --surface: #181818;
+  --on-surface: #242424;
+
   --primary: #b8860b;
   --primary-foreground: oklch(0.985 0 0);
+
   --secondary: oklch(0.269 0 0);
   --secondary-foreground: oklch(0.985 0 0);
+
+  --primary-text: #E0E0E0;
+  --secondary-text: #B0B0B0;
 
   --toaster-background: #333333;
   --toaster-foreground: #ffffff;
@@ -116,10 +125,6 @@
   --accent: #b8860b;
   --accent-foreground: var(--primary-text);
   --destructive: oklch(0.5 0.245 27.325);
-
-  --normal-bg: var(--popover);
-  --normal-text: var(--popover-foreground);
-  --normal-border: var(--border);
   
   --muted: oklch(0.269 0 0);
   --muted-foreground: oklch(0.708 0 0);

@@ -30,7 +30,7 @@ export default function RootLayout({
   return (
     <ClerkProvider appearance={{ baseTheme: dark }}>
       <html lang="en">
-        <body className={`${poppins.variable} antialiased flex flex-col sm:px-16 md:px-24 py-4 gap-4 min-h-screen`}>
+        <body className={`${poppins.variable} antialiased flex flex-col sm:px-16 md:px-24 !py-4 gap-4 min-h-screen`}>
           <NextThemeProvider defaultTheme="dark" attribute="class">
             <QueryProvider>
               <DialogProviders>

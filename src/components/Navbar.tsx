@@ -1,16 +1,19 @@
 "use client";
 
 import { useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, Moon, MoonIcon, Sun, SunIcon, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { UserButton } from "@clerk/nextjs";
 import { usePathname } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { useTheme } from "next-themes";
 
 const Links = () => {
   const pathname = usePathname();
   const isOnBrowse = pathname.startsWith("/browse");
-  const isOnLists = pathname === "/lists"; //.startsWith("/lists");
+  const isOnLists = pathname === "/lists";
+  const { theme, setTheme } = useTheme();
 
   return (
     <>
@@ -27,6 +30,18 @@ const Links = () => {
       >
         My Lists
       </Link>
+      <Button
+        type="button"
+        onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+        variant="link"
+        className="!px-0 hover:text-accent"
+      >
+        {theme === "dark" ?
+          <SunIcon className="!w-8 !h-8 text-foreground"/>
+        :
+          <MoonIcon className="!w-8 !h-8 text-primary-foreground"/>
+        }
+      </Button>
       <UserButton />
     </>
   )

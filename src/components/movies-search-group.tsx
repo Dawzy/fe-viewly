@@ -20,8 +20,8 @@ const MoviesSearchGroup = () => {
   }
   
   const handleSearch = () => {
-    if (value.length) {
-      toast.error("Please enter something!")
+    if (value.length < 2) {
+      toast.error("Please enter at least 2 characters")
       return;
     }
     setSearchQuery(value);

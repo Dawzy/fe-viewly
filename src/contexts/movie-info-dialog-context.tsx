@@ -66,6 +66,7 @@ export const MovieInfoDialogProvider = ({
   const [openLists, setOpenLists] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [dialogProps, setDialogProps] = useState<MovieInfoDialogProps>(DEFAULT_VALUE);
+  const [posterLoaded, setPosterLoaded] = useState(false);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const allowCloseRef = useRef(false);
   const {
@@ -113,7 +114,7 @@ export const MovieInfoDialogProvider = ({
   return (
     <DialogContext.Provider value={{ showDialog }}>
       {children}
-      <Dialog modal={false} open={isOpen} onOpenChange={setIsOpen}>
+      <Dialog modal={true} open={isOpen} onOpenChange={setIsOpen}>
         <DialogContent onInteractOutside={(e) => !allowCloseRef.current && e.preventDefault()}>
           <DialogHeader>
             <DialogTitle className="text-2xl font-bold">
@@ -125,12 +126,18 @@ export const MovieInfoDialogProvider = ({
             {/* Movie Poster */}
             <div className="flex-shrink-0 mx-auto md:mx-0">
               <div className="relative w-48 h-72 rounded-lg overflow-hidden">
+                {!posterLoaded &&
+                  <div className="absolute flex justify-center items-center w-full h-full">
+                    <Spinner />
+                  </div>
+                }
                 <Image
                   src={`${process.env.NEXT_PUBLIC_TMDB_IMAGES_HOST}/${poster_path}`}
                   alt={title}
                   fill
                   className="object-cover"
                   priority
+                  onLoadingComplete={() => setPosterLoaded(true)}
                 />
                 {vote_average && (
                   <div className={`absolute bottom-2 left-2 flex items-center gap-1 px-2 py-1 rounded-full bg-black/50`}>

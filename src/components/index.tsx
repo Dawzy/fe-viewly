@@ -12,6 +12,8 @@ import DialogProviders from "./dialog-providers";
 import MovieBanner from "./movie-banner";
 import MovieBannerCarousel from "./movie-banner-carousel";
 import Footer from "./footer";
+import MoviesSearchGroup from "./movies-search-group";
+import CategoryCarousels from "./category-carousels";
 
 export {
   Navbar,
@@ -27,5 +29,7 @@ export {
   DialogProviders,
   MovieBanner,
   MovieBannerCarousel,
-  Footer
+  Footer,
+  MoviesSearchGroup,
+  CategoryCarousels
 }

@@ -1,3 +1,5 @@
+import { UseQueryOptions } from "@tanstack/react-query";
+
 export type TMDBGenre = {
   id: number;
   name: string;
@@ -157,8 +159,8 @@ export interface MovieBannerProps {
 
 export interface MovieBannerCarouselProps {
   title: string;
-  category: string;
-  page: number;
+  queryOptions: Omit<UseQueryOptions<IMoviesResponse, Error, IMoviesResponse, any>, "queryFn">;
+
 }
 
 export interface IListRenamePayload {
@@ -177,6 +179,11 @@ export interface IMovieActionPayload {
 
 export interface IMoviesPayload {
   category: string;
+  page: number;
+}
+
+export interface ISearchMoviesPayload {
+  query: string;
   page: number;
 }
 

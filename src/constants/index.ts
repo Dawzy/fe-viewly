@@ -5,6 +5,16 @@ export const MAX_LIST_COUNT = 10;
 export const MAX_MOVIE_IN_LIST_COUNT = 20;
 export const LISTS_QUERY_KEY = "lists";
 export const BROWSE_QUERY_KEY = "browse";
+export const SEARCH_QUERY_KEY = "search";
+
+export const BROWSE_CATEGORIES = [
+  { name: "Trending", page: 1 },
+  { name: "Action", page: 1 },
+  { name: "Comedy", page: 1 },
+  { name: "Horror", page: 1 },
+  { name: "Thriller", page: 1 }
+]
+
 export const GENRES: TMDBGenre[] = [
   { id: 28,     name: "Action" },
   { id: 12,     name: "Adventure" },

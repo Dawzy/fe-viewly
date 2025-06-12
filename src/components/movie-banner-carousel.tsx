@@ -6,7 +6,6 @@ import {
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
-import { browseQueryOptions } from "@/query-api/query-options";
 import { useQuery } from "@tanstack/react-query";
 import { MovieBanner, Spinner } from "@/components";
 import { useState } from "react";
@@ -14,18 +13,18 @@ import {
   ChevronRight,
   ChevronLeft
 } from "lucide-react";
-import { Button } from "./ui/button";
+import { Button } from "@/components/ui/button";
 import { Label } from "@radix-ui/react-label";
 import { MovieBannerCarouselProps } from "@/types";
 
-const MovieBannerCarousel = ({ title, category, page }: MovieBannerCarouselProps) => {
+const MovieBannerCarousel = ({ title, queryOptions }: MovieBannerCarouselProps) => {
   const [carouselAPI, setCarouselAPI] = useState<CarouselApi>();
 
   const {
     data,
     isLoading,
     isError
-  } = useQuery( browseQueryOptions({ category, page }) );
+  } = useQuery( queryOptions );
 
   return (
     <>
@@ -45,9 +44,9 @@ const MovieBannerCarousel = ({ title, category, page }: MovieBannerCarouselProps
         }
       </div>
       <Carousel className="w-full bg-on-surface rounded-2xl" setApi={setCarouselAPI}>
-        {(isError || !data) ?
+        {(isError) ?
           <div className="flex justify-center items-center w-full h-full">
-            <p>Error loading the {category} category, please try again later.</p>
+            <p>Error loading results, please try again later.</p>
           </div>
         :  
           <CarouselContent className="-ml-2 w-full h-full py-3 rounded-2xl">
@@ -56,7 +55,7 @@ const MovieBannerCarousel = ({ title, category, page }: MovieBannerCarouselProps
                 <Spinner />
               </div>
             :
-              data.results.map( (movie, index) => (
+              data?.results.map( (movie, index) => movie.backdrop_path && (
                 <CarouselItem key={index} className="pl-2 md:pl-4 basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/4 xl:basis-1/5">
                   <MovieBanner movie={movie} />
                 </CarouselItem>

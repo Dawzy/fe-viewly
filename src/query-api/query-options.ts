@@ -1,13 +1,15 @@
 import { queryOptions } from "@tanstack/react-query";
 import {
   IMoviesPayload,
+  ISearchMoviesPayload,
 } from "@/types";
 import {
   getLists,
   getList,
   getMovies,
+  searchMovies,
 } from "./actions";
-import { BROWSE_QUERY_KEY, LISTS_QUERY_KEY } from "@/constants";
+import { BROWSE_QUERY_KEY, LISTS_QUERY_KEY, SEARCH_QUERY_KEY } from "@/constants";
 
 export const listsQueryOptions = (enabled=true) => {
   return queryOptions({
@@ -34,5 +36,15 @@ export const browseQueryOptions = (payload: IMoviesPayload) => {
     queryFn: () => getMovies(payload),
     retryDelay: failureCount => failureCount * 1000,
     staleTime: Infinity,
+  });
+}
+
+export const searchQueryOptions = (payload: ISearchMoviesPayload, enabled: boolean) => {
+  return queryOptions({
+    queryKey: [SEARCH_QUERY_KEY, payload],
+    queryFn: () => searchMovies(payload),
+    retryDelay: failureCount => failureCount * 1000,
+    staleTime: Infinity,
+    enabled
   });
 }

@@ -8,12 +8,14 @@ import {
   IMoviesPayload,
   IMoviesResponse,
   IRemoveMovieActionPayload,
+  ISearchMoviesPayload,
   List,
 } from "@/types";
 
 // URLS
 const LISTS_URL = "/lists";
 const BROWSE_URL = "/browse";
+const SEARCH_URL = "/search";
 
 export const getMovies = async (
     payload: IMoviesPayload
@@ -21,6 +23,17 @@ export const getMovies = async (
   const { data } = await axiosClientInstance({
     method: "get",
     url: `${BROWSE_URL}/${payload.category}/${payload.page}`
+  });
+
+  return data;
+}
+
+export const searchMovies = async (
+  payload: ISearchMoviesPayload
+): Promise<IMoviesResponse> => {
+  const { data } = await axiosClientInstance({
+    method: "get",
+    url: `${SEARCH_URL}/${payload.query}/${payload.page}`
   });
 
   return data;

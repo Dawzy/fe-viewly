@@ -144,6 +144,7 @@ export const InputDialogProvider = ({
               onChange={(e) => onChange(e.target.value)}
               className="col-span-5 col-start-2"
               placeholder={isDestructive ? "DELETE": ""}
+              onKeyDown={e => e.key === "Enter" && (isDestructive ? onDeleteClick : onClick)()}
             />
 
             {/* Character Limit Group */}

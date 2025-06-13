@@ -21,8 +21,8 @@ export const useNewListMutation = () => {
   
   return useMutation({
     mutationFn: newList,
-    onSettled: () => queryClient.invalidateQueries({ queryKey: [LISTS_QUERY_KEY] }),
-    onError: () => toast.error("Failed to create new list")
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: [LISTS_QUERY_KEY] }),
+    onError: (error) => toast.error((error as any).response?.data?.message ?? "Failed to create new list")
   });
 };
 
@@ -31,8 +31,8 @@ export const useDeleteListMutation = () => {
 
   return useMutation({
     mutationFn: deleteList,
-    onSettled: () => queryClient.invalidateQueries({ queryKey: [LISTS_QUERY_KEY] }),
-    onError: () => toast.error("Failed to delete list")
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: [LISTS_QUERY_KEY] }),
+    onError: (error) => toast.error((error as any).response?.data?.message ?? "Failed to delete list")
   });
 };
 
@@ -41,8 +41,8 @@ export const useRenameListMutation = () => {
 
   return useMutation({
     mutationFn: renameList,
-    onSettled: () => queryClient.invalidateQueries({ queryKey: [LISTS_QUERY_KEY] }),
-    onError: () => toast.error("Failed to rename list")
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: [LISTS_QUERY_KEY] }),
+    onError: (error) => toast.error((error as any).response?.data?.message ?? "Failed to rename list")
   });
 };
 
@@ -51,8 +51,8 @@ export const useAddMovieMutation = () => {
 
   return useMutation({
     mutationFn: addMovie,
-    onSettled: () => queryClient.invalidateQueries({ queryKey: [LISTS_QUERY_KEY] }),
-    onError: () => toast.error("Failed to add movie")
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: [LISTS_QUERY_KEY] }),
+    onError: (error) => toast.error((error as any).response?.data?.message ?? "Failed to add movie")
   });
 }
 
@@ -61,7 +61,7 @@ export const useRemoveMovieMutation = () => {
 
   return useMutation({
     mutationFn: removeMovie,
-    onSettled: () => queryClient.invalidateQueries({ queryKey: [LISTS_QUERY_KEY] }),
-    onError: () => toast.error("Failed to remove movie")
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: [LISTS_QUERY_KEY] }),
+    onError: (error) => toast.error((error as any).response?.data?.message ?? "Failed to remove movie")
   });
 }

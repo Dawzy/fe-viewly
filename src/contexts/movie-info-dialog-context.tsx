@@ -115,7 +115,7 @@ export const MovieInfoDialogProvider = ({
     <DialogContext.Provider value={{ showDialog }}>
       {children}
       <Dialog modal={true} open={isOpen} onOpenChange={setIsOpen}>
-        <DialogContent onInteractOutside={(e) => !allowCloseRef.current && e.preventDefault()}>
+        <DialogContent onInteractOutside={(e) => !allowCloseRef.current && e.preventDefault()} aria-describedby={undefined}>
           <DialogHeader>
             <DialogTitle className="text-2xl font-bold">
               {title}
@@ -137,7 +137,8 @@ export const MovieInfoDialogProvider = ({
                   fill
                   className="object-cover"
                   priority
-                  onLoadingComplete={() => setPosterLoaded(true)}
+                  onLoad={() => setPosterLoaded(true)}
+                  sizes="192px"
                 />
                 {vote_average && (
                   <div className={`absolute bottom-2 left-2 flex items-center gap-1 px-2 py-1 rounded-full bg-black/50`}>
@@ -200,7 +201,7 @@ export const MovieInfoDialogProvider = ({
                     Add To List
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent className="w-[200px] p-0 z-50">
+                <PopoverContent className="w-[200px] p-0 z-50" aria-describedby={undefined}>
                   <Command>
                     {isLoadingList ? 
                       <div className="flex justify-center items-center py-5">

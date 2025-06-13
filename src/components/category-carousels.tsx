@@ -7,9 +7,10 @@ import { BROWSE_CATEGORIES } from "@/constants";
 const CategoryCarousels = () => {
   return (
     <>
-      {BROWSE_CATEGORIES.map(category => (
+      {BROWSE_CATEGORIES.map( (category, index) => (
         <MovieBannerCarousel
           key={category.name}
+          carouselIndex={index}
           title={category.name}
           queryOptions={
             browseQueryOptions({

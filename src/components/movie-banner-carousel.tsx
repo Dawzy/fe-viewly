@@ -17,7 +17,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@radix-ui/react-label";
 import { MovieBannerCarouselProps } from "@/types";
 
-const MovieBannerCarousel = ({ title, queryOptions }: MovieBannerCarouselProps) => {
+const MovieBannerCarousel = ({ title, queryOptions, carouselIndex }: MovieBannerCarouselProps) => {
   const [carouselAPI, setCarouselAPI] = useState<CarouselApi>();
 
   const {
@@ -57,7 +57,7 @@ const MovieBannerCarousel = ({ title, queryOptions }: MovieBannerCarouselProps) 
             :
               data?.results.map( (movie, index) => movie.backdrop_path && (
                 <CarouselItem key={index} className="sm:pl-2 md:pl-4 basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/4 xl:basis-1/5">
-                  <MovieBanner movie={movie} />
+                  <MovieBanner movie={movie} isPriority={carouselIndex < 2 && index < 5} />
                 </CarouselItem>
               ))
             }

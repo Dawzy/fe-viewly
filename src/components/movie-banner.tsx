@@ -10,7 +10,7 @@ import { useState } from "react";
 import Spinner from "./spinner";
 import toast from "react-hot-toast";
 
-const MovieBanner = ({ movie }: MovieBannerProps) => {
+const MovieBanner = ({ movie, isPriority }: MovieBannerProps) => {
   const { showDialog } = useMovieInfoDialog();
   const { id, genre_ids, overview, poster_path, title, vote_average, backdrop_path } = movie;
   const genres = getGenresFromIDs(genre_ids);
@@ -55,7 +55,8 @@ const MovieBanner = ({ movie }: MovieBannerProps) => {
         height={786}
         className="rounded-2xl w-full my-0 mx-auto hover:scale-105 cursor-pointer"
         onClick={onView}
-        onLoadingComplete={() => setImageLoaded(true)}
+        onLoad={() => setImageLoaded(true)}
+        priority={isPriority}
       />
       <Label className="m-2 text-lg text-center">
         {movie.title}

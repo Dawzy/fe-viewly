@@ -155,12 +155,13 @@ export interface MovieCardProps {
 
 export interface MovieBannerProps {
   movie: TMDBMovieDetailsMin;
+  isPriority: boolean;
 }
 
 export interface MovieBannerCarouselProps {
   title: string;
   queryOptions: Omit<UseQueryOptions<IMoviesResponse, Error, IMoviesResponse, any>, "queryFn">;
-
+  carouselIndex: number;
 }
 
 export interface IListRenamePayload {

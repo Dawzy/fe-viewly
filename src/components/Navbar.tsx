@@ -52,7 +52,7 @@ const Navbar = () => {
   const pathname = usePathname();
 
   // Dont show if in sign in or sign up routes
-  if (pathname.startsWith("/sign-") || pathname === "/") return;
+  if (pathname.startsWith("/sign-") || pathname === "/") return null;
 
   return (
     <nav className="text-primary-text text-3xl md:text-2xl">

@@ -52,7 +52,7 @@ async function handlePOST(
   const token = await getToken();
   const { data } = await axiosAWSInstance({
     method: "put",
-    url: `${process.env.AWS_API_GATEWAY_URL}/${listId}/${movieId}`,
+    url: `${process.env.AWS_API_GATEWAY_LISTS_URL}/${listId}/${movieId}`,
     headers: {
       "Authorization": `Bearer ${token}`
     },
@@ -84,7 +84,7 @@ async function handleDELETE(
   const token = await getToken();
   const { data } = await axiosAWSInstance({
     method: "delete",
-    url: `${process.env.AWS_API_GATEWAY_URL}/${listId}/${movieId}`,
+    url: `${process.env.AWS_API_GATEWAY_LISTS_URL}/${listId}/${movieId}`,
     headers: {
       "Authorization": `Bearer ${token}`
     }

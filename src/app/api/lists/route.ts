@@ -34,7 +34,7 @@ async function handlePOST(request: NextRequest) {
 
   const { data } = await axiosAWSInstance({
     method: "post",
-    url: process.env.AWS_API_GATEWAY_URL,
+    url: process.env.AWS_API_GATEWAY_LISTS_URL,
     headers: {
       "Authorization": `Bearer ${token}`,
     },

@@ -18,11 +18,11 @@ const nextConfig: NextConfig = {
             key: 'Content-Security-Policy',
             value: [
               "default-src 'self'",
-              "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://*.clerk.accounts.dev https://*.clerk.com",
+              "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://*.clerk.accounts.dev https://*.clerk.com https://challenges.cloudflare.com",
               "style-src 'self' 'unsafe-inline' https://*.clerk.accounts.dev https://*.clerk.com",
               "img-src 'self' https://image.tmdb.org https://*.clerk.accounts.dev https://*.clerk.com data:",
-              "connect-src 'self' https://api.themoviedb.org https://*.clerk.accounts.dev https://*.clerk.com https://*.clerk-assets.com",
-              "frame-src 'self' https://*.clerk.accounts.dev https://*.clerk.com",
+              "connect-src 'self' https://api.themoviedb.org https://*.clerk.accounts.dev https://*.clerk.com https://*.clerk-assets.com https://challenges.cloudflare.com",
+              "frame-src 'self' https://*.clerk.accounts.dev https://*.clerk.com https://challenges.cloudflare.com",
               "font-src 'self' https://*.clerk.com",
               "worker-src 'self' blob:"
             ].join('; ')

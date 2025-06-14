@@ -15,7 +15,7 @@ export const fetchLists = async () => {
   // Get user's list
   const { data: lists } = await axiosAWSInstance({
     method: "get",
-    url: process.env.AWS_API_GATEWAY_URL,
+    url: process.env.AWS_API_GATEWAY_LISTS_URL,
     headers: {
       "Authorization": `Bearer ${token}`,
     }
@@ -32,7 +32,7 @@ export const fetchListById = async (listId: string) => {
   const token = await getToken();
   const { data: list } = await axiosAWSInstance({
     method: "get",
-    url: `${process.env.AWS_API_GATEWAY_URL}/${listId}`,
+    url: `${process.env.AWS_API_GATEWAY_LISTS_URL}/${listId}`,
     headers: {
       Authorization: `Bearer ${token}`
     }

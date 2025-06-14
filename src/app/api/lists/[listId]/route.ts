@@ -51,7 +51,7 @@ async function handlePATCH(
   const token = await getToken();
   const { data } = await axiosAWSInstance({
     method: "patch",
-    url: `${process.env.AWS_API_GATEWAY_URL}/${listId}`,
+    url: `${process.env.AWS_API_GATEWAY_LISTS_URL}/${listId}`,
     headers: {
       "Authorization": `Bearer ${token}`
     },
@@ -81,7 +81,7 @@ async function handleDELETE(
   // Delete list from DB
   const { data } = await axiosAWSInstance({
     method: "delete",
-    url: `${process.env.AWS_API_GATEWAY_URL}/${listId}`,
+    url: `${process.env.AWS_API_GATEWAY_LISTS_URL}/${listId}`,
     headers: {
       "Authorization": `Bearer ${token}`
     }

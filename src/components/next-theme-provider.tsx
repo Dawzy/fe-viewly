@@ -17,7 +17,7 @@ export default function ThemeProvider({
   children,
   ...props
 }: {
-  [key: string]: any; // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [key: string]: any;
 }) {
 	return (
     <NextThemesProvider {...props}>

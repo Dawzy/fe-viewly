@@ -52,6 +52,7 @@ const MoviesSearchGroup = () => {
       {/* Results Popup */}
       {searchQuery &&
         <MovieBannerCarousel
+          carouselIndex={0} // Makes images priority
           title={`Results for "${searchQuery}"`}
           queryOptions={
             searchQueryOptions({

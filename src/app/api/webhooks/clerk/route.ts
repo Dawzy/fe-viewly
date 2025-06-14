@@ -16,13 +16,16 @@ async function handlePOST(request: NextRequest) {
 
   // Verify the webhook
   const wh = new Webhook(process.env.CLERK_WEBHOOK_SECRET);
-  let event;
-
-  event = wh.verify(body, {
+  const event = wh.verify(body, {
     "svix-id": svixId,
     "svix-timestamp": svixTimestamp,
     "svix-signature": svixSignature,
-  }) as any;
+  }) as {
+    type: string;
+    data: {
+      id: string;
+    }
+  };
 
   // Handle user deletion
   if (event.type !== "user.deleted")

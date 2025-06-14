@@ -1,4 +1,4 @@
-import { InputDialogProps, List } from "@/types"
+import { InputDialogProps } from "@/types"
 import { MAX_LIST_NAME_LENGTH } from "@/constants";
 
 export const getNewListDialogTemplate = (

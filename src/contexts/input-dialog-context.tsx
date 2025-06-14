@@ -3,7 +3,6 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { List } from "@/types";
 import { InputDialogProps } from "@/types";
 import validator from "validator";
 import {
@@ -25,12 +24,12 @@ import {
 import { sanitizeString } from "@/utils";
 
 const DEFAULT_VALUE: InputDialogProps = {
-  onConfirm: (_: string) => {},
+  onConfirm: (_arg: string) => {},
   title: "",
   desc: "",
   label: "",
   isDestructive: false,
-  confirmButtonText: "",
+confirmButtonText: "",
   maxInputLength: 0
 }
 

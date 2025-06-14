@@ -37,7 +37,7 @@ export default async function Home() {
         <div className="bg-gray-900 rounded-xl p-6">
           <h3 className="text-xl font-semibold text-gold-500">Time Tracking</h3>
           <p className="text-gray-400 text-sm mt-2">
-            Know how much time you've spent watching.
+            Know how much time you&apos;ve spent watching.
           </p>
         </div>
         <div className="bg-gray-900 rounded-xl p-6">

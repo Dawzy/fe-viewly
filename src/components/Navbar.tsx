@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Menu, Moon, MoonIcon, Sun, SunIcon, X } from "lucide-react";
+import { Menu, MoonIcon, SunIcon, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { UserButton } from "@clerk/nextjs";

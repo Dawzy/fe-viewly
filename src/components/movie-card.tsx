@@ -1,7 +1,5 @@
 import { MovieCardProps } from "@/types";
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
-import { Trash } from "lucide-react";
 import { Spinner } from "@/components";
 import { useConfirmDialog } from "@/contexts/confirm-dialog-context";
 import { useMovieInfoDialog } from "@/contexts/movie-info-dialog-context";

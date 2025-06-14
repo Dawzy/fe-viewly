@@ -1,15 +1,8 @@
-import { redirect } from "next/navigation";
-import { auth } from "@clerk/nextjs/server";
 import { SignInButton, SignUpButton } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 
-export default async function Home() {
-  const { userId } = await auth();
-
-  if (userId)
-    redirect("/lists");
-
+export default function Home() {
   return (
     <div className="page-container justify-center items-center !gap-6">
       <Image src="/Logo.svg" alt="" width={128} height={128}/>

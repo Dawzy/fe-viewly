@@ -77,7 +77,7 @@ const MyLists = () => {
       {/* Page Content */}
       <div className="page w-full px-4 py-4 gap-4 flex-wrap justify-center items-start">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4 max-w-full">
-          {data.toReversed().map(list => {
+          {data.map(list => {
             if (pendingListRename || pendingListDelete) {
               if (deleteVars?.listId == list.listId || renameVars?.listId == list.listId) 
                 return (<LoadingListCard key={list.listId} />);

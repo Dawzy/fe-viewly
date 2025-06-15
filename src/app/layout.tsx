@@ -4,7 +4,6 @@ import type { Metadata } from "next";
 import { QueryProvider, DialogProviders, Navbar, Footer } from "@/components";
 import { Poppins } from "next/font/google";
 
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Toaster } from "react-hot-toast";
 
 import { dark } from "@clerk/themes";
@@ -38,7 +37,6 @@ export default function RootLayout({
                 {children}
                 <Footer />
               </DialogProviders>
-              <ReactQueryDevtools initialIsOpen={false} />
             </QueryProvider>
             <Toaster
               position="bottom-center"

@@ -49,7 +49,7 @@ const MovieBanner = ({ movie, isPriority }: MovieBannerProps) => {
         </div>
       }
       <Image
-        src={`${process.env.NEXT_PUBLIC_TMDB_IMAGES_HOST}/${backdrop_path}`}
+        src={`${process.env.NEXT_PUBLIC_TMDB_IMAGES_HOST}${backdrop_path}`}
         alt={title}
         width={1398}
         height={786}

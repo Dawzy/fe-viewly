@@ -132,7 +132,7 @@ export const MovieInfoDialogProvider = ({
                   </div>
                 }
                 <Image
-                  src={`${process.env.NEXT_PUBLIC_TMDB_IMAGES_HOST}/${poster_path}`}
+                  src={`${process.env.NEXT_PUBLIC_TMDB_IMAGES_HOST}${poster_path}`}
                   alt={title}
                   fill
                   className="object-cover"

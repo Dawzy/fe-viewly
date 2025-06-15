@@ -14,8 +14,10 @@ import {
 import {
   createContext,
   useContext,
-  useState
+  useState,
+  useRef
 } from "react";
+import Link from "next/link";
 
 const DEFAULT_VALUE: DisclaimerDialogProps = {
   onConfirm: () => {},
@@ -40,7 +42,9 @@ export const DisclaimerDialogProvider = ({
 }) => {
   // State
   const [isOpen, setIsOpen] = useState(false);
+  const [disabled, setDisabled] = useState(true);
   const [dialogProps, setDialogProps] = useState<DisclaimerDialogProps>(DEFAULT_VALUE);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const {
     onConfirm,
   } = dialogProps;
@@ -48,6 +52,13 @@ export const DisclaimerDialogProvider = ({
   const showDialog = (props: DisclaimerDialogProps) => {
     setDialogProps(props);
     setIsOpen(true);
+
+    // Disable button for a few seconds so user doesn't instinctively click away from the disclaimer
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    timeoutRef.current = setTimeout(
+      () => setDisabled(false),
+      5000
+    );
   }
 
   const closeDialog = () => {
@@ -70,15 +81,22 @@ export const DisclaimerDialogProvider = ({
               DISCLAIMER
             </DialogTitle>
             <DialogDescription className="text-center">
-              Viewly is a sample project developed to demonstrate technical skills. It is by no means a finished product and should
-              not be used as such. All list and movie data is wiped reguraly, and most of the code is open source and that can be
-              found on my Github.
+                Viewly is a sample project developed to demonstrate technical skills. It is by no means a finished product and should
+                not be used as such. All data is wiped reguraly, and the source code can be found on
+                <Link
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline hover:text-accent font-bold inline ml-1"
+                  href={process.env.NEXT_PUBLIC_GITHUB_SOURCE || ""}
+                >
+                  Github
+                </Link>
             </DialogDescription>
           </DialogHeader>
 
           {/* Footer */}
           <DialogFooter className="w-full">
-            <Button type="button" variant="default" className="w-1/3 mx-auto" onClick={onClick}>
+            <Button type="button" variant="default" className="w-1/3 mx-auto" onClick={onClick} disabled={disabled}>
               I Understand
             </Button>
           </DialogFooter>

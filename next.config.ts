@@ -18,12 +18,12 @@ const nextConfig: NextConfig = {
             key: "Content-Security-Policy",
             value: [
               "default-src 'self'",
-              "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://*.clerk.accounts.dev https://*.clerk.com https://challenges.cloudflare.com https://*.davidfawzy.net",
-              "style-src 'self' 'unsafe-inline' https://*.clerk.accounts.dev https://*.clerk.com",
-              "img-src 'self' https://image.tmdb.org https://*.clerk.accounts.dev https://*.clerk.com data:",
-              "connect-src 'self' https://api.themoviedb.org https://*.clerk.accounts.dev https://*.clerk.com https://*.clerk-assets.com https://challenges.cloudflare.com https://*.davidfawzy.net",
-              "frame-src 'self' https://*.clerk.accounts.dev https://*.clerk.com https://challenges.cloudflare.com",
-              "font-src 'self' https://*.clerk.com",
+              "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://*.clerk.accounts.dev https://*.clerk.com https://challenges.cloudflare.com https://*.davidfawzy.net https://accounts.google.com",
+              "style-src 'self' 'unsafe-inline' https://*.clerk.accounts.dev https://*.clerk.com https://accounts.google.com",
+              "img-src 'self' https://image.tmdb.org https://*.clerk.accounts.dev https://*.clerk.com https://accounts.google.com https://*.googleusercontent.com data:",
+              "connect-src 'self' https://api.themoviedb.org https://*.clerk.accounts.dev https://*.clerk.com https://*.clerk-assets.com https://challenges.cloudflare.com https://*.davidfawzy.net https://accounts.google.com https://oauth2.googleapis.com",
+              "frame-src 'self' https://*.clerk.accounts.dev https://*.clerk.com https://challenges.cloudflare.com https://accounts.google.com",
+              "font-src 'self' https://*.clerk.com https://fonts.gstatic.com",
               "worker-src 'self' blob:"
             ].join('; ')
           }

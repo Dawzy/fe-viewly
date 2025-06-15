@@ -18,7 +18,7 @@ const nextConfig: NextConfig = {
             key: 'Content-Security-Policy',
             value: [
               "default-src 'self'",
-              "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://*.clerk.accounts.dev https://*.clerk.com https://challenges.cloudflare.com",
+              "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://*.clerk.accounts.dev https://*.clerk.com https://challenges.cloudflare.com https://clerk.viewly.davidfawzy.net",
               "style-src 'self' 'unsafe-inline' https://*.clerk.accounts.dev https://*.clerk.com",
               "img-src 'self' https://image.tmdb.org https://*.clerk.accounts.dev https://*.clerk.com data:",
               "connect-src 'self' https://api.themoviedb.org https://*.clerk.accounts.dev https://*.clerk.com https://*.clerk-assets.com https://challenges.cloudflare.com",

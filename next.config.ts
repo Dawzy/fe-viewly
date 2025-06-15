@@ -4,24 +4,24 @@ const nextConfig: NextConfig = {
   async headers() {
     return [
       {
-        source: '/(.*)',
+        source: "/(.*)",
         headers: [
           {
-            key: 'X-Frame-Options',
-            value: 'SAMEORIGIN' // Changed from DENY to allow Clerk iframes
+            key: "X-Frame-Options",
+            value: "SAMEORIGIN" // Changed from DENY to allow Clerk iframes
           },
           {
-            key: 'X-Content-Type-Options',
-            value: 'nosniff'
+            key: "X-Content-Type-Options",
+            value: "nosniff"
           },
           {
-            key: 'Content-Security-Policy',
+            key: "Content-Security-Policy",
             value: [
               "default-src 'self'",
               "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://*.clerk.accounts.dev https://*.clerk.com https://challenges.cloudflare.com https://*.davidfawzy.net",
               "style-src 'self' 'unsafe-inline' https://*.clerk.accounts.dev https://*.clerk.com",
               "img-src 'self' https://image.tmdb.org https://*.clerk.accounts.dev https://*.clerk.com data:",
-              "connect-src 'self' https://api.themoviedb.org https://*.clerk.accounts.dev https://*.clerk.com https://*.clerk-assets.com https://challenges.cloudflare.com",
+              "connect-src 'self' https://api.themoviedb.org https://*.clerk.accounts.dev https://*.clerk.com https://*.clerk-assets.com https://challenges.cloudflare.com https://*.davidfawzy.net",
               "frame-src 'self' https://*.clerk.accounts.dev https://*.clerk.com https://challenges.cloudflare.com",
               "font-src 'self' https://*.clerk.com",
               "worker-src 'self' blob:"

@@ -19,10 +19,10 @@ const nextConfig: NextConfig = {
             key: "Content-Security-Policy",
             value: [
               "default-src 'self'",
-              "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://*.clerk.accounts.dev https://*.clerk.com https://challenges.cloudflare.com https://*.davidfawzy.net https://accounts.google.com https://sentry.io https://cdn.sentry-cdn.com",
+              `script-src 'self' 'unsafe-eval' 'unsafe-inline' https://*.clerk.accounts.dev https://*.clerk.com https://challenges.cloudflare.com https://*.${process.env.NEXT_PUBLIC_HOST_DOMAIN} https://accounts.google.com https://sentry.io https://cdn.sentry-cdn.com`,
               "style-src 'self' 'unsafe-inline' https://*.clerk.accounts.dev https://*.clerk.com https://accounts.google.com",
               "img-src 'self' https://image.tmdb.org https://*.clerk.accounts.dev https://*.clerk.com https://accounts.google.com https://*.googleusercontent.com data:",
-              `connect-src 'self' https://api.themoviedb.org https://*.clerk.accounts.dev https://*.clerk.com https://*.clerk-assets.com https://challenges.cloudflare.com https://*.davidfawzy.net https://accounts.google.com https://oauth2.googleapis.com https://sentry.io https://*.ingest.sentry.io https://*.ingest.us.sentry.io`,
+              `connect-src 'self' https://api.themoviedb.org https://*.clerk.accounts.dev https://*.clerk.com https://*.clerk-assets.com https://challenges.cloudflare.com https://*.${process.env.NEXT_PUBLIC_HOST_DOMAIN} https://accounts.google.com https://oauth2.googleapis.com https://sentry.io https://*.ingest.sentry.io https://*.ingest.us.sentry.io`,
               "frame-src 'self' https://*.clerk.accounts.dev https://*.clerk.com https://challenges.cloudflare.com https://accounts.google.com",
               "font-src 'self' https://*.clerk.com https://fonts.gstatic.com",
               "worker-src 'self' blob:"
@@ -35,6 +35,14 @@ const nextConfig: NextConfig = {
   /* config options here */
   images: {
     remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "**.vercel.app",
+      },
+      {
+        protocol: "https",
+        hostname: `**.${process.env.NEXT_PUBLIC_HOST_DOMAIN}`,
+      },
       {
         protocol: "https",
         hostname: "image.tmdb.org",

@@ -13,5 +13,6 @@ namespace NodeJS {
     NEXT_PUBLIC_CLERK_SIGN_UP_URL: string;
     NEXT_PUBLIC_TMDB_IMAGES_HOST: string;
     NEXT_PUBLIC_PORTFOLIO_URL: string;
+    NEXT_PUBLIC_HOST_DOMAIN: string;
   }
 }

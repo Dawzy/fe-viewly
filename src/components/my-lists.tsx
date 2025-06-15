@@ -79,7 +79,7 @@ const MyLists = () => {
       <div className="page w-full px-4 py-4 gap-4 flex-wrap justify-center items-start">
         {data.length === 0 ?
           <div className="w-full h-full flex items-center justify-center text-xl my-auto text-center">
-            <h1>You don't have any lists! Try pressing on <Plus className="text-accent inline" /> to create a list!</h1>
+            <h1>You don&apos;t have any lists! Try pressing on <Plus className="text-accent inline" /> to create a list!</h1>
           </div>
         :
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4 max-w-full">

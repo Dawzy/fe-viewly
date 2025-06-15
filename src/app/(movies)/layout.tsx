@@ -17,7 +17,7 @@ const MoviesLayout = ({
           onConfirm: () => localStorage.setItem("disclaimer", "true")
         }
       );
-  }, [showDialog]);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return children;
 }

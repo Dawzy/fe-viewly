@@ -6,6 +6,7 @@ namespace NodeJS {
     TMDB_ACCESS_TOKEN: string;
     CLERK_SECRET_KEY: string;
     CLERK_WEBHOOK_SECRET: string;
+    SENTRY_AUTH_TOKEN: string;
     NEXT_PUBLIC_API: string;
     NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: string;
     NEXT_PUBLIC_CLERK_SIGN_IN_URL: string;
